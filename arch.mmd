@@ -1,0 +1,25 @@
+graph LR
+    subgraph Client [User Browser]
+        direction TB
+        UI[UI Vanilla JS]
+        TJS[Transformers.js WebGPU]
+        Cache[Local Cache Dict/Corpus]
+        
+        UI --> TJS
+        TJS -.-> Cache
+        UI --> Cache
+    end
+
+    subgraph Server [Cloud Infrastructure]
+        direction TB
+        API[Backend API FastAPI]
+        DB[(Supabase pgvector)]
+        LLM((Google Gemini 2.5))
+    end
+
+    Client -->|Translation Request| API
+    Client -->|Vector Search| DB
+    API <-->|Prompt + Context| LLM
+    
+    style Client fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style Server fill:#e1f5fe,stroke:#333,stroke-width:2px

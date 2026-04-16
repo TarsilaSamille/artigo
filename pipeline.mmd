@@ -1,0 +1,29 @@
+flowchart TD
+    Input[User Input Sentence] --> Split((Split))
+    
+    Split --> PathA[Context A: Keyword Extraction]
+    PathA --> Gloss[Local Glossary Lookup]
+    
+    Split --> PathB[Context B: Semantic Search]
+    PathB --> Vector[Vector Embedding]
+    Vector --> Remote[Remote DB Search]
+    Remote --> SimSent[Similar Sentences]
+    
+    Split --> PathC[Context C: Usage Examples]
+    PathC --> KeySearch[Keyword Usage Search]
+    KeySearch --> ReRank[Client-Side WebGPU Re-ranking]
+    ReRank --> ContextC[Context Examples]
+    
+    Split --> PathD[Context D: Grammar Rules]
+    PathD --> Rules[Rule Injection]
+    
+    Gloss --> LLM{Gemini 2.5 LLM}
+    SimSent --> LLM
+    ContextC --> LLM
+    Rules --> LLM
+    
+    LLM --> Output[Final Translation]
+    
+    style Input fill:#fff3e0
+    style LLM fill:#e8f5e9
+    style Output fill:#fff3e0

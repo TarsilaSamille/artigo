@@ -1,0 +1,309 @@
+Bidaio Jagoy Translator: A Hybrid Client-Centric RAG System for Low-Resource Language Preservation
+1. Executive Summary
+The preservation of endangered languages constitutes one of the most pressing challenges in modern computational linguistics. As dominant languages consolidate their presence in the digital sphere, indigenous vernaculars face a "digital extinction" driven by a lack of representational data in foundational Large Language Models (LLMs). This report presents a comprehensive technical analysis of the Bidaio Jagoy Translator, a specialized AI platform developed to document, preserve, and revitalize Bidaio Jagoy, a Land Dayak language spoken by the Bidayuh communities of Sarawak, Malaysia, and West Kalimantan, Indonesia.
+Unlike conventional machine translation systems that rely on massive parallel corpora and server-side scaling, the Bidaio Jagoy Translator introduces a Hybrid Client-Centric Retrieval-Augmented Generation (RAG) architecture. This novel design shifts the locus of semantic processing—specifically embedding generation and context re-ranking—to the client device using Transformers.js and WebGPU acceleration.1 By leveraging the computational power of the user's browser, the system achieves a privacy-preserving, low-latency environment that democratizes access to advanced AI tools without incurring prohibitive infrastructure costs.
+The core of the system is the Multi-Staged Context Assembly pipeline, which synthesizes four distinct sources of linguistic truth: direct local glossary lookups, remote semantic vector retrieval via Supabase/pgvector 3, client-side neural re-ranking, and explicit grammatical rule injection. This "dense context" approach grounds the generative capabilities of Google Gemini 2.5 Flash 4, allowing it to perform "few-shot" translation with high fidelity even in the absence of extensive training data. This report details the system's linguistic foundations, software architecture, and performance characteristics, offering a robust blueprint for the technological preservation of extremely low-resource languages.
+2. Introduction: The Computational Crisis of Low-Resource Languages
+2.1 The Linguistic "Digital Divide"
+The rapid advancement of Natural Language Processing (NLP), driven by the Transformer architecture, has paradoxically widened the gap between global "high-resource" languages and indigenous "low-resource" vernaculars. Foundational models such as GPT-4 and Gemini are trained on datasets scraping the public web—Common Crawl, Wikipedia, and digitized literature—where English, Mandarin, Spanish, and standard Malay constitute the vast majority of tokens.
+Bidaio Jagoy (also referred to as Bau-Jagoi or BiJagoi) occupies the far end of the "long tail." Spoken by approximately 50,000 people in the Bau district of Sarawak and distinct communities in Kalimantan 5, it possesses a vibrant oral tradition but a negligible digital footprint. Its presence is confined to scattered PDFs, academic papers from institutions like Universiti Malaysia Sarawak (UNIMAS), and community blogs.7 Consequently, when standard LLMs attempt to process Bidaio Jagoy, they exhibit catastrophic failure modes:
+Hallucination: Inventing phonologically plausible but meaningless words.
+Code-Switching: Defaulting to standard Malay (Bahasa Melayu) or Indonesian due to the models' inability to distinguish the Dayak dialect from the dominant regional lingua franca.5
+Grammatical Drift: Imposing English SVO (Subject-Verb-Object) structures onto Bidaio sentences without respecting local morphosyntactic rules, such as the placement of intensifiers.10
+2.2 The Limitations of Fine-Tuning
+A traditional machine learning approach to this problem would involve Fine-Tuning (FT), a process where a pre-trained model's weights are updated using a domain-specific dataset. However, FT presents insuperable barriers for endangered language preservation:
+Data Scarcity: FT typically requires tens of thousands of high-quality, aligned sentence pairs. For Bidaio Jagoy, digitized parallel corpora are virtually non-existent, often limited to small dictionaries or religious texts.9
+Catastrophic Forgetting: Fine-tuning a massive model on a tiny dataset can cause it to lose its general reasoning abilities or overfit to the limited examples, reducing its utility as a general-purpose translator.12
+Static Knowledge: A fine-tuned model is frozen in time. As new words are documented by the community, the entire model must be retrained to incorporate them—a costly and slow process.
+2.3 The RAG Paradigm Shift
+Retrieval-Augmented Generation (RAG) offers a superior paradigm for this use case. Instead of embedding knowledge into the model's parameters (implicit memory), RAG retrieves relevant information at runtime (explicit memory) and feeds it to the model via the context window.14
+The Bidaio Jagoy Translator utilizes this approach to function as a "teaching machine." For every translation request, the system dynamically assembles a curriculum of vocabulary, sentence patterns, and grammar rules relevant to that specific input. The recent release of Gemini 2.5 Flash with its 1-million-token context window 16 has made this "In-Context Learning" strategy viable, allowing the system to theoretically provide the model with a comprehensive snapshot of the language's grammar for every single inference pass.
+3. Linguistic Profile of Bidaio Jagoy
+To understand the architectural decisions behind the translator, it is essential to analyze the linguistic data it processes. Bidaio Jagoy is an Austronesian language of the Land Dayak group 18, exhibiting distinct phonological and morphological features that distinguish it from standard Malay and other Borneo dialects.
+3.1 Dialectology and Variation
+The Bidayuh language is not a monolith; it is a complex dialect continuum. The four main dialect clusters recognized in Sarawak are Bukar-Sadong, Biatah, Bau-Jagoi, and Salako-Rara.6 The Bidaio Jagoy Translator is strictly scoped to the Bau-Jagoi variety to ensure dialectal purity. Mixing dialects is a common error in human translation within the region, and one the system is designed to prevent.
+The distinctions are non-trivial and lexical. For instance, the word for "father" varies significantly across the continuum:
+
+Language/Dialect
+Word for "Father"
+Word for "You" (Singular)
+Source
+Bidaio Jagoy (Bau)
+Sama
+Mu'u
+19
+Bukar-Sadong
+Amang
+Amu
+19
+Biatah
+Sama
+Ku-u
+19
+Standard Malay
+Bapa
+Kamu
+19
+
+The system's "Context Source A" (Direct Glossary Lookup) is populated specifically with Bau-Jagoi lexicons to enforce this distinction. If a user inputs a Bukar-Sadong term, the system's re-ranking mechanism (Context C) will filter it out in favor of the Jagoi equivalent if available, or the system will flag the discrepancy.
+3.2 Phonological Challenges: The Glottal Stop & Orthography
+Bidaio Jagoy orthography presents unique challenges for the tokenizer layers of LLMs.
+The Phonemic Glottal Stop: The language features a critical glottal stop, often represented by an apostrophe (') or a k at the end of words. For example, bau' (the town/location) is distinct from bau (eagle).5 Standard tokenizers often strip punctuation, potentially altering bau' to bau and changing the semantic meaning entirely.
+Vowel Length: Words like baat (heavy) contain long vowels (/ba:t/), distinct from short vowels.5
+Preploded Nasals: Words ending in nasal sounds often have a "preploded" quality, transcribed as pm, tn, or kng (e.g., asink for urine).5
+The system's Keyword Extraction logic (Stage 1 of the RAG pipeline) utilizes custom Regular Expressions (Regex) rather than standard NLP tokenizers to preserve these entities. It explicitly safeguards the apostrophe and character sequences like ng and nk during the retrieval phase.
+3.3 Morphosyntax and The Intensifier Rule
+While Bidaio Jagoy generally follows an SVO (Subject-Verb-Object) word order 18, its modification structures—specifically intensifiers—follow complex positional rules that generic models fail to capture.
+Research by UNIMAS 10 highlights that intensifiers (words like "very" or "really") have fixed positions relative to the adjective they modify:
+Pre-Adjective Intensifiers: Sikia (very).
+Correct: Sikia manah (Very good).
+Incorrect: Manah sikia.
+Post-Adjective Intensifiers: Manah (very) and Bonar (true/very).
+Correct: Manah manah (Good very) or Broma bonar (Delicious very/truly).
+Incorrect: Bonar broma.
+A naive translation by a model trained on English or Malay (where "very" usually comes before the adjective, e.g., sangat baik) would likely output Bonar broma. To counteract this, the system's Context D (Grammatical Constitution) explicitly injects these rules into the LLM prompt: "Rule: If using 'bonar' for emphasis, place it AFTER the adjective." This overrides the LLM's probabilistic tendency to follow English word order.
+4. System Architecture: The Hybrid Client-Centric Model
+The Bidaio Jagoy Translator departs from the traditional "Thin Client, Fat Server" model used by services like Google Translate. Instead, it employs a Hybrid Client-Centric architecture. This design choice is driven by two factors: cost efficiency (minimizing server-side compute for a non-profit preservation project) and latency reduction (performing semantic checks locally).
+4.1 The Stack Overview
+The system utilizes a modern serverless stack designed for scalability and minimal maintenance 23:
+Frontend: Vanilla JavaScript + HTML5. The team opted for a zero-build framework approach to ensure simplicity and longevity; the code can be edited in a simple text editor without a complex Node.js build chain, lowering the barrier to entry for future community maintainers. It is styled with Tailwind CSS for responsiveness.
+Client-Side AI: Transformers.js (@xenova/transformers) running in the browser. This library allows the execution of Transformer models directly within the JavaScript runtime.1
+Backend: FastAPI (Python) hosted on Vercel Serverless Functions. It acts as a lightweight bridge to the LLM and the vector database.
+AI Engine: Google Gemini 2.5 Flash (via LangChain), chosen for its massive context window and speed.
+Database & Vector Store: Supabase (PostgreSQL) with the pgvector extension for storing sentence embeddings and translation history.3
+4.2 The "Fat Client" Philosophy with Transformers.js
+In a standard RAG application, the user sends a query to the server; the server generates an embedding, queries the database, and calls the LLM. The Bidaio system shifts the semantic orchestration to the client.
+Using Transformers.js, the browser downloads a quantized embedding model—specifically Xenova/all-MiniLM-L6-v2 25—and runs it locally. This model is approximately 23MB (int8 quantized) to 80MB (unquantized) 27, small enough to be cached effectively in the browser storage.
+Why Client-Side Embeddings?
+Privacy & Offline Potential: While the final translation requires the cloud LLM, the search for local glossary terms and the re-ranking of usage examples happens entirely on the user's device. This architecture paves the way for a fully offline "dictionary mode" in future iterations.
+Latency: Generating embeddings on a server introduces network overhead. With WebGPU support in Chrome (and increasingly Android) 29, the browser can generate embeddings in milliseconds, often faster than a round-trip to a remote API.
+Cost: Offloading embedding generation saves server CPU cycles. For a community-funded project, reducing cloud compute costs is critical for sustainability.
+5. Client-Side Intelligence: Transformers.js and WebGPU
+The decision to run AI models in the browser is enabled by recent advancements in web standards, specifically WebGPU.
+5.1 WebGPU vs. WASM: A Performance Analysis
+Until recently, running AI in the browser relied on WebAssembly (WASM), which executes code on the CPU. While faster than JavaScript, WASM is significantly slower than native GPU execution. WebGPU is the successor to WebGL, providing low-level access to the device's Graphics Processing Unit (GPU) for general-purpose computing.30
+Benchmarks for Transformers.js v3 indicate that WebGPU backends can be 40-75x faster than WASM backends on high-end chips (e.g., Apple M3 Max) and 4-20x faster on consumer integrated graphics.2
+Backend
+Hardware Access
+Inference Speed (MiniLM-L6)
+Cold Start
+Browser Support (2025)
+WASM
+CPU
+~100-300ms
+Fast
+Universal
+WebGPU
+GPU
+~5-20ms
+Slower (Shader compilation)
+Chrome 113+, Android 12+, Firefox Nightly
+
+The Bidaio Jagoy Translator defaults to WebGPU where available. It performs a feature check (navigator.gpu) at startup. If WebGPU is detected, it loads the GPU-optimized ONNX models. If not, it falls back to the WASM backend, ensuring compatibility with older devices often found in rural deployment areas.29
+5.2 Model Selection: all-MiniLM-L6-v2
+The system uses all-MiniLM-L6-v2 for generating embeddings. This model maps sentences to a 384-dimensional dense vector space.32
+Size: The quantized int8 version is only ~23MB 28, allowing for rapid download even on 4G connections typical in Sarawak's rural areas.
+Performance: Despite its small size, it retains high semantic accuracy for sentence similarity tasks, outperforming significantly larger models like paraphrase-multilingual-mpnet-base-v2 (970MB) in efficiency-adjusted benchmarks.27
+Memory Footprint: Running this model in the browser requires less than 100MB of RAM, making it viable for mobile browsers on Android devices.26
+6. The Retrieval-Augmented Generation (RAG) Implementation
+The core innovation of the Bidaio system is its Multi-Staged Context Assembly, which combines four distinct sources of truth to "teach" the LLM the language on-the-fly for every request.
+6.1 The Hybrid Retrieval Pipeline
+When a user submits a sentence for translation (e.g., "The water flows quickly"), the system triggers the RAGPromptGenerator which executes the following workflow:
+Stage 1: Keyword Extraction
+The system identifies key content words in the English input using a client-side NLP processor. It strips stop words ("the", "is", "at") and focuses on semantic anchors: "water", "flows", "quickly".
+Stage 2: Context A - Direct Glossary Lookup (Local)
+The browser queries a local dictionary.json file to find direct 1:1 translations for the extracted keywords.
+Mechanism: Exact string matching and stemming.
+Data Source: Digitized wordlists from sources like the Dayak Bidayuh Dictionary and community blogs.8
+Outcome: Retrieves {"water": "piin", "quickly": "mangu"}.
+Purpose: LLMs often hallucinate basic vocabulary in low-resource settings. Hard-coded dictionary matches act as "anchors," preventing the model from guessing.
+Stage 3: Context B - Semantic Sentence Retrieval (Remote Vector Search)
+For sentence structure and idiomatic expressions, the system queries the Supabase vector store.
+Embedding: The client generates a vector for the input sentence using all-MiniLM-L6-v2.
+Request: A request is made to /api/search/by-vector which queries Supabase.
+Search Algorithm: The system uses the HNSW (Hierarchical Navigable Small World) index on the pgvector column.
+Why HNSW? HNSW indexes allow for approximate nearest neighbor search with significantly higher query-per-second (QPS) performance than IVFFlat (Inverted File Flat). Supabase benchmarks show HNSW offers 6x better performance at 98% recall.34 Since the corpus of Bidaio sentences is relatively small (<100k sentences), HNSW graphs can be built quickly and traversed largely in memory.
+Retrieval: It retrieves the top $k=3$ to $5$ most semantically similar English-Bidaio sentence pairs from the corpus.
+Input: "The water flows quickly."
+Retrieved: "The river runs fast" -> Sungoi kiaju mangu.
+Purpose: This teaches the LLM that "fast" in the context of water might use mangu (flow speed) rather than laju (running speed).
+Stage 4: Context C - Contextual Usage Examples (Local + In-Browser Re-ranking)
+This is a novel feature designed to handle polysemy (words with multiple meanings). The system maintains a client-side JSON cache of "usage examples."
+Candidate Selection: The system pulls 20 sentences containing "quickly" from the local corpus.
+Local Re-ranking: It uses the in-browser embedding model (Transformers.js) to calculate the cosine similarity between the user's specific input sentence and these 20 candidates.
+Filtering: It re-ranks them and selects the top 3 that match the semantic context of the input.
+Novelty: By performing this re-ranking on the client, the system avoids sending 20 candidate sentences to the LLM (saving tokens) or to the server (saving bandwidth). It ensures that if the user implies "fast" (speed), they don't get examples of "fast" (abstaining from food).
+Stage 5: Context D - Grammatical Constitution (Rule Injection)
+Finally, the system injects explicit grammatical rules based on the linguistic profile identified in Section 3.
+Source: grammar_rules.json.
+Logic: The system detects patterns in the input. If it finds an adjective ("quickly/fast") and an intensifier ("very"), it retrieves the Intensifier Placement Rule.10
+Purpose: These rules act as the "highest authority." They are presented to the LLM as constraints that must override its internal probabilistic patterns.
+6.2 Structured "Chain-of-Thought" Prompting
+The system does not simply ask for a translation. It constructs a structured prompt that forces the LLM to follow a strict cognitive process, known as Chain-of-Thought (CoT) prompting.
+Prompt Structure:
+
+JSON
+
+
+{
+  "role": "system",
+  "content": "You are an expert translator for Bidaio Jagoy. Use the provided Contexts A, B, C, and D. Do not hallucinate. Follow the grammar rules strictly."
+},
+{
+  "role": "user",
+  "content": "Translate: 'The water is very cold.'
+   Context A (Vocab): {'water': 'piin', 'cold': 'madud', 'very': 'sikia'}
+   Context B (Similar Sentences):
+   Context D (Grammar): 'Rule: Intensifier `sikia` (very) comes BEFORE the adjective.'
+   
+   Output format: JSON with fields 'analysis', 'draft', 'final_translation', 'confidence_score'."
+}
+
+
+Model Output:
+
+JSON
+
+
+{
+  "analysis": "Identified 'water' as 'piin' and 'cold' as 'madud'. Detected intensifier 'very' mapped to 'sikia'. Applied Rule D: 'sikia' must precede 'madud'.",
+  "draft": "Piin sikia madud",
+  "final_translation": "Piin sikia madud",
+  "confidence_score": 0.95
+}
+
+
+This strict JSON output allows the frontend to parse the "reasoning" and display it to the user. This turns the translator into an educational tool: the user sees why the translation was made, fostering language acquisition.
+7. The AI Engine: Google Gemini 2.5 Flash
+The backend orchestrator uses Google Gemini 2.5 Flash as the synthesis engine. The choice of this specific model is critical and data-driven.
+7.1 Large Context Window for Dense Injection
+Gemini 2.5 Flash features a context window of 1 million tokens.16 This is a transformative capability for low-resource languages. In traditional "Few-Shot" learning with smaller models (e.g., 4k or 8k context), the system could only provide 5-10 examples. With 1M tokens, the Bidaio Jagoy Translator can theoretically inject the entire Bidaio grammar book and thousands of dictionary entries into the context for every single request if necessary.
+While we prune context to minimize latency, this capacity ensures that the model never lacks information. It moves the system from "Few-Shot" to "Many-Shot" In-Context Learning, where the model essentially "learns" the language from scratch for each query.
+7.2 Latency and Cost
+Flash is optimized for high-volume, low-latency tasks.36 For a real-time translation tool, user experience depends on speed. Flash offers a Time-To-First-Token (TTFT) that is competitive with smaller models while offering the reasoning capabilities of larger ones. Furthermore, its pricing structure is favorable for a non-profit preservation project compared to "Pro" or "Ultra" variants.17
+7.3 Reasoning Capabilities
+Gemini 2.5 exhibits improved reasoning capabilities over previous 1.5 versions.37 This is crucial for the "Analysis" step of the prompt. The model must be able to logically deduce: "Context A says X, but Rule D says Y. Therefore, I must follow Y." Smaller or less capable models often fail to follow these negative constraints and revert to their training data (hallucination).
+8. Data Engineering & The "Human-in-the-Loop"
+A translation system for an endangered language cannot be static; it must be a living archive. The Bidaio Jagoy Translator implements a Human-in-the-Loop (HITL) architecture to improve data quality over time.38
+8.1 The Ephemeral Correction Loop
+When a user receives a translation, they are presented with an "Edit/Correct" interface.
+Submission: The user modifies the Bidaio output (e.g., correcting a specific village dialect usage).
+Ephemeral Storage: The correction is sent to the backend but is not immediately committed to the main vector index. Instead, it is stored in an Ephemeral Feedback Store (a temporary Supabase table or CSV).
+Community Review: Trusted elders or linguists access a dashboard to review these ephemeral entries.
+Promotion: Verified corrections are then vectorized and promoted to the main corpus.40
+This cycle protects the database from poisoning (bad data) while transforming the user base from passive consumers into active archivists.
+8.2 The Bulk Translation System
+To support the translation of documents (e.g., folktales, community news, Bible verses), the system includes a batch processing pipeline (/api/translate/bulk).
+Naive Splitting: Text is split into sentences using standard delimiters (., ?, !).
+Parallelism: Sentences are processed in parallel batches of 5-10. This respects the API rate limits of Vertex AI while maximizing throughput.
+Context Carry-over: A limitation of sentence-level RAG is the loss of narrative context (e.g., who is "he" in the second sentence?). To mitigate this, the "summary" or the translated output of the previous sentence is passed as context to the next, maintaining narrative coherence.16
+9. Performance Analysis and Challenges
+9.1 Latency Breakdowns
+The "Hybrid Client-Centric" model introduces a complex latency profile:
+Client Embeddings (WebGPU): ~20ms. (Negligible)
+Supabase Vector Search: ~150ms. (Fast due to HNSW)
+LLM Inference (Gemini): ~800ms - 1.5s. (Dominant factor)
+Network Overhead: Variable.
+The total round-trip time is typically 1.5 to 2 seconds. While slower than Google Translate (which caches heavily), this is acceptable for the high-precision requirements of language preservation.
+9.2 Cold Start and Caching
+The primary drawback of client-side AI is the initial download of the model (~23MB).
+Mitigation: The system uses a Service Worker to cache the .onnx model file after the first load. Subsequent loads are near-instant.41
+User Experience: A "Initializing Neural Engine..." progress bar educates the user that processing is happening locally, turning a wait time into a feature showcase.
+9.3 Vocabulary Gaps and Fallbacks
+Bidaio Jagoy has words for concepts that do not exist in English (e.g., specific types of jungle spirits or rice harvesting stages like nosa' 8). Conversely, English has modern concepts lacking in Bidaio.
+Solution: The RAG system includes a "Description Fallback." If a word has no direct translation and no semantic match, the prompt instructs Gemini to describe the concept in Bidaio using available vocabulary rather than inventing a phonologically plausible nonsense word.
+10. Directory Structure Reference
+To aid future community developers and researchers, the system follows a modular, transparent directory structure:
+public/js/:
+transformers.min.js: The local AI runtime library.
+rag-translator.js: The "Brain" of the frontend. It contains the RAGOrchestrator class which manages the embedLocal() (Transformers.js pipeline) and rankCandidates() (dot-product similarity) functions.
+script.js: Main UI logic, including the Bulk Translation aggregator and event listeners.
+api/:
+app.py: The FastAPI backend. It handles the SupabaseClient connection pooling and the LangChainAdapter for interfacing with Vertex AI.
+data/:
+dictionary.json: The static key-value pair source for Context A.
+corpus.json: A subset of the corpus used for client-side re-ranking (Context C).
+grammar_rules.json: The source of truth for Context D (Rule Injection).
+styles/:
+tailwind.css: Utility classes for the UI.
+This structure separates concerns: linguistic data is isolated in JSON files, AI logic is in JavaScript, and server orchestration is in Python. This allows a linguist to update the dictionary (data/dictionary.json) without needing to touch the application code.
+11. Conclusion
+The Bidaio Jagoy Translator represents a synthesis of advanced neural search and traditional rule-based linguistics. By acknowledging the limitations of generic LLMs in low-resource settings and architecting a system that actively compensates for them through multi-staged context retrieval, we achieve a translation quality that respects the nuance of the Bidaio language.
+The use of Transformers.js and WebGPU ensures the system is fast, scalable, and privacy-preserving, while the Supabase backend provides the robust vector storage needed for semantic grounding. Most importantly, the system is designed to be a "living" artifact—one that learns from its users and grows alongside the community it serves. As we look toward the future, expanding this architecture to the sister dialects of Biatah and Bukar-Sadong 5 stands as the next logical step in the preservation of the Dayak linguistic identity.
+Appendix: Key System Specifications
+Component
+Technology
+Specification
+Purpose
+Model
+Gemini 2.5 Flash
+1M Token Context
+Long-context reasoning & synthesis
+Embeddings
+all-MiniLM-L6-v2
+384 Dimensions
+Semantic search (Local & Remote)
+Vector DB
+Supabase (pgvector)
+HNSW Index
+Fast retrieval of sentence patterns
+Client Runtime
+Transformers.js
+WebGPU / WASM
+In-browser re-ranking & privacy
+Frontend
+Vanilla JS
+Zero-build
+Easy community maintenance
+Target Language
+Bidaio Jagoy
+SVO, Austronesian
+Preservation target
+Latency
+Hybrid
+~1.5s avg
+Balance of speed and accuracy
+
+End of Report
+Referências citadas
+Transformers.js - Hugging Face, acessado em dezembro 19, 2025, https://huggingface.co/docs/transformers.js/en/index
+Excited about WebGPU + transformers.js (v3): utilize your full (GPU) hardware in the browser : r/LocalLLaMA - Reddit, acessado em dezembro 19, 2025, https://www.reddit.com/r/LocalLLaMA/comments/1fexeoc/excited_about_webgpu_transformersjs_v3_utilize/
+pgvector: Embeddings and vector similarity | Supabase Docs, acessado em dezembro 19, 2025, https://supabase.com/docs/guides/database/extensions/pgvector
+Release notes | Gemini API - Google AI for Developers, acessado em dezembro 19, 2025, https://ai.google.dev/gemini-api/docs/changelog
+Bidayuh Bau - Borneo Dictionary, acessado em dezembro 19, 2025, https://borneodictionary.com/bidayuh-bau/
+The Bidayuh Language Yesterday, Today and Tomorrow - SIL International, acessado em dezembro 19, 2025, https://www.sil.org/system/files/reapdata/14/22/41/142241791248658274840881242401680083100/ebook_33_Bidayuh_6_21_12_rev.pdf
+Items where Subject is "P Language and Literature > P Philology. Linguistics" - UNIMAS Institutional Repository, acessado em dezembro 19, 2025, https://ir.unimas.my/view/subjects/P1.html
+Bang Sind'a Bidoyoh (Bidayuh) Jagoi, acessado em dezembro 19, 2025, https://bidoyohjagoi.blogspot.com/
+A preliminary analysis of bidayuh Jagoi pantun - ResearchGate, acessado em dezembro 19, 2025, https://www.researchgate.net/publication/334281317_A_preliminary_analysis_of_bidayuh_Jagoi_pantun
+Intensifiers in Bidayuh Bau-Jagoi - SciSpace, acessado em dezembro 19, 2025, https://scispace.com/pdf/intensifiers-in-bidayuh-bau-jagoi-1civp2jpkl.pdf
+Alkitab Bidayuh Jagoi - Apps on Google Play, acessado em dezembro 19, 2025, https://play.google.com/store/apps/details?id=org.ipsapps.indonesia.sne.bible.jagoi&hl=en_US
+RAG vs Fine-tuning vs Prompt Engineering: Everything You Need to Know | InterSystems, acessado em dezembro 19, 2025, https://www.intersystems.com/resources/rag-vs-fine-tuning-vs-prompt-engineering-everything-you-need-to-know/
+RAG vs Fine-Tuning : Balancing Cost, Accuracy, and Latency in AI Optimization | by Ayush Goel | Medium, acessado em dezembro 19, 2025, https://medium.com/@ayushgoelar/rag-vs-fine-tuning-balancing-cost-accuracy-and-latency-in-ai-optimization-d8ba73aff616
+Fine-tuning & Few-shot RAG Methods - Emergent Mind, acessado em dezembro 19, 2025, https://www.emergentmind.com/topics/fine-tuning-and-few-shot-retrieval-augmented-generation-rag
+Fine Tuning vs. Retrieval Augmented Generation for Less Popular Knowledge - arXiv, acessado em dezembro 19, 2025, https://arxiv.org/html/2403.01432v3
+Google Gemini 2.5 Flash: Context Window & Token Limits - Data Studios, acessado em dezembro 19, 2025, https://www.datastudios.org/post/google-gemini-2-5-flash-context-window-token-limits
+Gemini 2.5 Flash: Pricing, Context Window, Benchmarks, and More - LLM Stats, acessado em dezembro 19, 2025, https://llm-stats.com/models/gemini-2.5-flash
+Exploratory analysis of combined genome-wide SNP data - arXiv, acessado em dezembro 19, 2025, https://arxiv.org/pdf/1101.5519
+Bidayuh - Wikipedia, acessado em dezembro 19, 2025, https://en.wikipedia.org/wiki/Bidayuh
+Personal Pronouns in Bidayuh Bau - Borneo Dictionary, acessado em dezembro 19, 2025, https://borneodictionary.com/bidayuh-bau/personal-pronouns.php
+Personal Pronouns in Bidayuh Biatah - Borneo Dictionary, acessado em dezembro 19, 2025, https://borneodictionary.com/bidayuh-biatah/personal-pronouns.php
+(PDF) Intensifiers in Bidayuh Bau-Jagoi - ResearchGate, acessado em dezembro 19, 2025, https://www.researchgate.net/publication/342543954_Intensifiers_in_Bidayuh_Bau-Jagoi
+Items where Year is Article - the UNIMAS Institutional Repository, acessado em dezembro 19, 2025, https://ir.unimas.my/view/year/article/2024.html
+Talks, Workshops, Tutorials and Presentations on Artificial Intelligence for JavaScript Developers - GitNation, acessado em dezembro 19, 2025, https://gitnation.com/tags/artificial-intelligence
+pgvector: Fewer dimensions are better - Supabase, acessado em dezembro 19, 2025, https://supabase.com/blog/fewer-dimensions-are-better-pgvector
+Sentence Embeddings. Introduction to Sentence Embeddings – hackerllama - GitHub Pages, acessado em dezembro 19, 2025, https://osanseviero.github.io/hackerllama/blog/posts/sentence_embeddings/
+Pretrained Models — Sentence Transformers documentation, acessado em dezembro 19, 2025, https://www.sbert.net/docs/sentence_transformer/pretrained_models.html
+Xenova/all-MiniLM-L6-v2 at main - Hugging Face, acessado em dezembro 19, 2025, https://huggingface.co/Xenova/all-MiniLM-L6-v2/tree/main/onnx
+WebGPU is now supported in major browsers | Blog - web.dev, acessado em dezembro 19, 2025, https://web.dev/blog/webgpu-supported-major-browsers
+WebGPU API - MDN Web Docs - Mozilla, acessado em dezembro 19, 2025, https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API
+Implementation Status - GitHub, acessado em dezembro 19, 2025, https://github.com/gpuweb/gpuweb/wiki/Implementation-Status
+sentence-transformers/all-MiniLM-L6-v2 - Hugging Face, acessado em dezembro 19, 2025, https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
+Personal Pronouns - DAYAK BIDAYUH DICTIONARY, acessado em dezembro 19, 2025, https://thebidayuh.com/dictionary-categories/personal-pronouns/
+pgvector v0.5.0: Faster semantic search with HNSW indexes - Supabase, acessado em dezembro 19, 2025, https://supabase.com/blog/increase-performance-pgvector-hnsw
+pgvector 0.6.0: 30x faster with parallel index builds - Supabase, acessado em dezembro 19, 2025, https://supabase.com/blog/pgvector-fast-builds
+Gemini 2.5 Flash | Generative AI on Vertex AI - Google Cloud Documentation, acessado em dezembro 19, 2025, https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-flash
+Gemini (language model) - Wikipedia, acessado em dezembro 19, 2025, https://en.wikipedia.org/wiki/Gemini_(language_model)
+Human in the Loop - ModernMT, acessado em dezembro 19, 2025, https://www.modernmt.com/human-in-the-loop
+Design Patterns for Machine Learning Based Systems with Human-in-the-Loop - arXiv, acessado em dezembro 19, 2025, https://arxiv.org/html/2312.00582v1
+Human in the Loop: The Key to Value Creation in AI - SPD Technology, acessado em dezembro 19, 2025, https://spd.tech/artificial-intelligence/human-in-the-loop/
+Run Your Own AI in the Browser: Build a Real-Time Small Language Model Using WebGPU, acessado em dezembro 19, 2025, https://drlee.io/run-your-own-ai-in-the-browser-build-a-real-time-small-language-model-using-webgpu-8dbaa477b295

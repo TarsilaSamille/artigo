@@ -1,0 +1,67 @@
+\begin{thebibliography}{}
+
+\bibitem[Campbell et~al. 2019]{scispace_intensifiers}
+Campbell, Y.~M. et~al. (2019).
+\newblock Intensifiers in bidayuh bau-jagoi.
+\newblock {\em Issues in Language Studies}.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[{Data Studios} 2024]{data_studios_gemini}
+{Data Studios} (2024).
+\newblock Google gemini 2.5 flash: Context window and token limits.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[{Google AI for Developers} 2025]{gemini_release}
+{Google AI for Developers} (2025).
+\newblock {\em Gemini API Changelog}.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[{Google Cloud} 2025]{vertex_ai}
+{Google Cloud} (2025).
+\newblock Gemini 2.5 flash on vertex ai.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[{Hugging Face} 2024]{transformersjs}
+{Hugging Face} (2024).
+\newblock Transformers.js.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[{InterSystems} 2025]{intersystems_rag}
+{InterSystems} (2025).
+\newblock Rag vs fine-tuning vs prompt engineering.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[{LLM Stats} 2024]{llm_stats}
+{LLM Stats} (2024).
+\newblock Gemini flash series: Performance benchmarks and infrastructure costs.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[Nekoto et~al. 2020]{nekoto2020participatory}
+Nekoto, W. et~al. (2020).
+\newblock Participatory research for low-resource machine translation: A case
+  study in african languages.
+\newblock In {\em Findings of EMNLP 2020}.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[{NLLB Team} et~al. 2022]{nllb2022no}
+{NLLB Team} et~al. (2022).
+\newblock No language left behind: Scaling human-centered machine translation.
+\newblock {\em arXiv preprint arXiv:2207.04672}.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[{Supabase} 2021]{pgvector}
+{Supabase} (2021).
+\newblock {\em pgvector: Embeddings and vector similarity}.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[{Supabase} 2023]{supabase_hnsw}
+{Supabase} (2023).
+\newblock pgvector: Faster semantic search with hnsw indexes.
+\newblock Accessed: 2025-12-22.
+
+\bibitem[{UNIMAS} 2025]{unimas_repo}
+{UNIMAS} (2025).
+\newblock Unimas institutional repository: Philology. linguistics.
+\newblock Accessed: 2025-12-22.
+
+\end{thebibliography}
