@@ -1,25 +1,46 @@
-graph LR
-    subgraph Client [User Browser]
-        direction TB
-        UI[UI Vanilla JS]
-        TJS[Transformers.js WebGPU]
-        Cache[Local Cache Dict/Corpus]
-        
-        UI --> TJS
+flowchart TB
+    %% Global Styling
+    accTitle: System Architecture
+    accDescr: Hybrid Client-Centric RAG Architecture
+%%{init: {'themeVariables': { 'fontSize': '30px' }}}%%
+
+    subgraph Client [" "]
+        direction LR
+     
+        Title1["`**User Browser  (Client-Side)**`"]:::header
+
+        UI["UI<br/>(Vanilla JS)"]
+        TJS["Transformers.js<br/>(ONNX Runtime)"]
+        Cache["Local Cache<br/>(Glossary/Corpus)"]
+        HW["WebGPU / WASM<br/>Acceleration"]
+
+        UI <--> TJS
         TJS -.-> Cache
-        UI --> Cache
+        TJS <--> HW
+        UI <--> Cache
     end
 
-    subgraph Server [Cloud Infrastructure]
+    subgraph Server [" "]
         direction TB
-        API[Backend API FastAPI]
-        DB[(Supabase pgvector)]
-        LLM((Google Gemini 2.5))
+        API["FastAPI Backend<br/>(Vercel)"]
+        DB[("Supabase<br/>(pgvector/HNSW)")]
+        LLM(("Google Gemini<br/>2.5 Flash"))
+        Title["`**Cloud Infrastructure (Serverless)**`"]:::header 
+
     end
 
-    Client -->|Translation Request| API
-    Client -->|Vector Search| DB
-    API <-->|Prompt + Context| LLM
+    Client --|Translation Request|--> API
+    Client --|Vector Search|--> DB
+    Client --|Semantic Bridge|--> ExtAPI["External API<br/>(Datamuse)"]
+    API <-->|Context<br/>Orchestration| LLM
     
-    style Client fill:#f9f9f9,stroke:#333,stroke-width:2px
-    style Server fill:#e1f5fe,stroke:#333,stroke-width:2px
+    %% Styles
+    classDef default font-size:32px,fill:#ffffff,stroke:#000F,stroke-width:3px;
+    linkStyle default stroke:#000F,stroke-width:3px;
+    
+    style Client fill:none,stroke:#000F,stroke-width:4px,stroke-dasharray: 8 8
+    style Server fill:none,stroke:#000F,stroke-width:4px,stroke-dasharray: 8 8
+    style LLM fill:none,stroke:#000F,stroke-width:5px
+    style DB fill:none,stroke:#000F,stroke-width:4px
+    style HW fill:none,stroke:#000F,stroke-width:3px
+    classDef header fill:none,color:#000F,stroke:none,font-size:32px

@@ -1,0 +1,33 @@
+% URL Formatting Package for Bibliography
+% Ensures URLs in bibliography entries are clickable and visible
+
+\ProvidesPackage{url-formatting}
+
+% Make URLs in bibliography clickable and colored
+\usepackage[hidelinks=false]{hyperref}
+
+% Redefine bibliography formatting to show URLs
+\renewcommand*{\mkbibacro}[1]{\textsc{\lowercase{#1}}}
+
+% Format URLs in blue with proper link
+\def\url@style#1{\def\UrlFont{\ttfamily\color{blue}}}
+
+% Ensure URLs appear in bibliography
+\AtEveryCitekey{
+  \iffieldundef{url}{}{\addperiod}
+}
+
+% Add URL field to all bibliography entries
+\newbibmacro{url+urldate}{%
+  \printtext[]{%
+    \iffieldundef{url}{}{%
+      \newline\noindent%
+      \href{\thefield{url}}{\textcolor{blue}{\underline{\small\url{\thefield{url}}}}}%
+      \iffieldundef{urldate}{}{%
+        \space\textit{(Accessed: \thefield{urldate})}%
+      }%
+    }%
+  }%
+}
+
+\endinput

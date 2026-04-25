@@ -1,0 +1,29 @@
+flowchart TD
+    %% Global Styling
+    accTitle: Linguistic Analysis reasoning
+    accDescr: Chain-of-Thought reasoning module for Bidayuh Jagoy translation
+
+    Input -->|Input: 'this is an example<br/>of happiness'| Decont["1. Deconstruction<br/>(Grammar)"]
+    Decont --> Rule1["Rule: Nominal<br/>Predication"]
+    Decont --> Rule2["Rule: Abstract Noun<br/>Placement"]
+    
+    Rule1 --> Mapping["2. Mapping<br/>(Vocabulary)"]
+    Rule2 --> Mapping
+    
+    Mapping --> Map1["'this' -> 'itih'"]
+    Mapping --> Map2["'example' -> 'contoh'"]
+    Mapping --> Map3["'happiness' -> 'pengrindu'"]
+    
+    Map1 --> Synth["3. Synthesis"]
+    Map2 --> Synth
+    Map3 --> Synth
+    
+    Synth --> Final["Output:<br/>'itih contoh pengrindu'"]
+    
+    %% Styles
+    classDef default font-size:24px,fill:#ffffff,stroke:#64748b,stroke-width:2px;
+    linkStyle default stroke:#64748b,stroke-width:2px;
+
+    style Input fill:#ecfeff,stroke:#06b6d4,stroke-width:3px
+    style Final fill:#ecfeff,stroke:#06b6d4,stroke-width:3px
+    style Synthesis fill:#f8fafc,stroke:#94a3b8,stroke-dasharray: 5 5,stroke-width:2px

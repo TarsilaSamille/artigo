@@ -1,0 +1,6 @@
+Context A (Glossary): "dark" -> "sab", "very" -> "sikia"
+Context B/C (Corpus): "river flowed" -> "Sungei nu'u mo"
+Context D (Grammar): intensifier `sikia' precedes adjective.
+
+Task: Translate the user input using the provided context.
+Input: "The very dark river flowed past our village."

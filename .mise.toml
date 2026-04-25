@@ -1,0 +1,11 @@
+[tools]
+python = "3.12"
+
+[tasks.install-deps]
+description = "Install Python dependencies for rendering"
+run = "pip install playwright"
+
+[tasks.render-arch]
+description = "Render architecture diagram to high-res image"
+run = "python render_mmd_highres.py"
+depends = ["install-deps"]

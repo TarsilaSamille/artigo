@@ -1,29 +1,50 @@
 flowchart TD
-    Input[User Input Sentence] --> Split((Split))
+    %% Global Styling
+    accTitle: Translation Pipeline
+    accDescr: 5-Stage Context Assembly Pipeline
+%%{init: {'themeVariables': { 'fontSize': '30px' }}}%%
+
+    Input -->|User Query| Split(("Orchestrator"))
     
-    Split --> PathA[Context A: Keyword Extraction]
-    PathA --> Gloss[Local Glossary Lookup]
+    Split --> PathA["Context A:<br/>Lexical Hits"]
+    PathA --> Gloss["Direct Dictionary<br/>Mapping"]
     
-    Split --> PathB[Context B: Semantic Search]
-    PathB --> Vector[Vector Embedding]
-    Vector --> Remote[Remote DB Search]
-    Remote --> SimSent[Similar Sentences]
+    Split --> PathB["Context B:<br/>Semantic Search"]
+    PathB --> Vector["Transformers.js<br/>Embeddings"]
+    Vector --> Remote["Supabase HNSW<br/>Retrieval"]
+    Remote --> SimSent["Top Parallel<br/>Pairs"]
     
-    Split --> PathC[Context C: Usage Examples]
-    PathC --> KeySearch[Keyword Usage Search]
-    KeySearch --> ReRank[Client-Side WebGPU Re-ranking]
-    ReRank --> ContextC[Context Examples]
+    Split --> PathC["Context C:<br/>Local Re-ranking"]
+    PathC --> KeySearch["Frequency<br/>Retrieval"]
+    KeySearch --> ReRank["WebGPU<br/>Dot Product"]
+    ReRank --> ContextC["Ranked Usage<br/>Nuances"]
     
-    Split --> PathD[Context D: Grammar Rules]
-    PathD --> Rules[Rule Injection]
+    Split --> PathD["Context D:<br/>Grammar Rules"]
+    PathD --> Rules["Linguistic<br/>Constraints"]
     
-    Gloss --> LLM{Gemini 2.5 LLM}
-    SimSent --> LLM
-    ContextC --> LLM
-    Rules --> LLM
+    Split --> PathE["Context E:<br/>Bridge Path"]
+    PathE --> Synonym["Datamuse API<br/>(Synonyms)"]
+    Synonym --> Bridge["Semantic<br/>Bridge Extraction"]
     
-    LLM --> Output[Final Translation]
+    subgraph Synthesis [" "]
+       Title["`**Prompt Synthesis Engine**`"]:::header 
+
+        direction TB
+        Gloss --> LLM{{"Google Gemini<br/>2.5 Flash"}}
+        SimSent --> LLM
+        ContextC --> LLM
+        Rules --> LLM
+        Bridge --> LLM
+    end
     
-    style Input fill:#fff3e0
-    style LLM fill:#e8f5e9
-    style Output fill:#fff3e0
+    LLM --> Output["Bidayuh Translation"]
+    
+    %% Styles
+    classDef default font-size:32px,fill:#ffffff,stroke:#64748b,stroke-width:3px;
+    linkStyle default stroke:#64748b,stroke-width:2px;
+
+    style Input fill:#f0fdfa,stroke:#14b8a6,stroke-width:4px
+    style LLM fill:#e0e7ff,stroke:#6366f1,stroke-width:5px
+    style Output fill:#f0fdfa,stroke:#14b8a6,stroke-width:4px
+    style Synthesis fill:#f8fafc,stroke:#94a3b8,stroke-dasharray: 10 10,stroke-width:3px
+    classDef header fill:none,color:#000F,stroke:none,font-size:32px

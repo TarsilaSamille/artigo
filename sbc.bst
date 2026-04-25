@@ -59,6 +59,7 @@ ENTRY
     series
     title
     type
+    url
     volume
     year
   }
@@ -408,6 +409,13 @@ FUNCTION {format.vol.num.pages}
   if$
 }
 
+FUNCTION {format.url}
+{ url empty$
+    { "" }
+    { "\url{" url * "}" * }
+  if$
+}
+
 FUNCTION {format.chapter.pages}
 { chapter empty$
     'format.pages
@@ -495,6 +503,8 @@ FUNCTION {article}
   if$
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -529,6 +539,8 @@ FUNCTION {book}
   format.edition output
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -544,6 +556,8 @@ FUNCTION {booklet}
   address output
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -580,6 +594,8 @@ FUNCTION {inbook}
   format.edition output
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -607,6 +623,8 @@ FUNCTION {incollection}
   if$
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -634,6 +652,8 @@ FUNCTION {inproceedings}
   if$
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -652,6 +672,8 @@ FUNCTION {manual}
   format.edition output
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -668,6 +690,8 @@ FUNCTION {mastersthesis}
   address output
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -682,6 +706,8 @@ FUNCTION {misc}
   howpublished output
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -698,6 +724,8 @@ FUNCTION {phdthesis}
   address output
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -716,6 +744,8 @@ FUNCTION {proceedings}
   publisher output				% here
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -732,6 +762,8 @@ FUNCTION {techreport}
   address output
   new.block
   note output
+  new.block
+  format.url output
   fin.entry
 }
 
@@ -744,6 +776,8 @@ FUNCTION {unpublished}
   format.title "title" output.check
   new.block
   note "note" output.check
+  new.block
+  format.url output
   fin.entry
 }
 

@@ -1,0 +1,72 @@
+import asyncio
+import os
+from playwright.async_api import async_playwright
+
+OUT = os.path.dirname(os.path.abspath(__file__))
+
+async def render_mermaid(filename):
+    with open(f"{OUT}/{filename}.mmd", "r") as f:
+        mmd_content = f.read()
+
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+        <style>
+            body {{ background: white; margin: 0; padding: 20px; font-family: 'Times New Roman', serif; }}
+            #graph {{ background: white; }}
+        </style>
+    </head>
+    <body>
+        <div id="graph" class="mermaid">
+        {mmd_content}
+        </div>
+        <script>
+            mermaid.initialize({{ 
+                startOnLoad: true, 
+                theme: 'neutral',
+                fontSize: 32,
+                fontFamily: 'serif'
+            }});
+        </script>
+    </body>
+    </html>
+    """
+    
+    html_path = f"{OUT}/temp_render.html"
+    with open(html_path, "w") as f:
+        f.write(html_content)
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        # Scale factor 3.0 for ultra-premium sharpness
+        context = await browser.new_context(device_scale_factor=3.0)
+        page = await context.new_page()
+        await page.goto(f"file://{html_path}")
+        
+        # Wait for mermaid to render
+        await page.wait_for_selector(".mermaid svg")
+        
+        # Get element size
+        element = await page.query_selector(".mermaid svg")
+        box = await element.bounding_box()
+        
+        await page.screenshot(
+            path=f"{OUT}/fig_{filename}_highres.png", 
+            clip=box,
+            omit_background=True
+        )
+        print(f"   Generated high-res fig_{filename}_highres.png")
+        await browser.close()
+    
+    os.remove(html_path)
+
+async def main():
+    print("1. Rendering High-DPI Diagrams...")
+    await render_mermaid("arch")
+    await render_mermaid("pipeline")
+    print("   Done!")
+
+if __name__ == "__main__":
+    asyncio.run(main())
