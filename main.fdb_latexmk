@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1777153657.24713 "main.aux" "main.bbl" "main" 1777153660.04839 0
+["bibtex main"] 1777153822.0021 "main.aux" "main.bbl" "main" 1777153824.57769 0
   "./references.bib" 1777153274.29625 7856 c74dbffb15acd0bd88beb1236e82b9f8 ""
   "./sbc.bst" 1776991676.54921 22370 b7580b5ffc692f96d81a2b185ee01582 ""
-  "main.aux" 1777153659.36849 6725 fbe53eef71331415ef9469f2ac6b1277 "pdflatex"
+  "main.aux" 1777153823.90313 6794 c9ecb24b02dc5d82016f6da1019b6388 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1777153657.51134 "main.tex" "main.pdf" "main" 1777153660.04872 0
+["pdflatex"] 1777153822.36465 "main.tex" "main.pdf" "main" 1777153824.57803 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -164,10 +164,10 @@
   "fig_debug_v4.png" 1776472154.11303 270174 50c8551dc189a07534bebc658b88155a ""
   "fig_main_v4.png" 1776472150.60647 92046 445e7281c326e231ef7b9c9b5ef276e6 ""
   "fig_pipeline_highres.png" 1776984643.74853 108915 8a1056420c34d72f61f4086c06f0437a ""
-  "main.aux" 1777153659.36849 6725 fbe53eef71331415ef9469f2ac6b1277 "pdflatex"
-  "main.bbl" 1777153657.50274 5931 e1c18019eeb4e52bd2e08bf561921f1d "bibtex main"
-  "main.out" 1777153659.37005 4665 c150601273a9a5b0abe16652507377dd "pdflatex"
-  "main.tex" 1777153649.85885 34868 9effb7b4cf4277ff2f4f73a37ab6d1b6 ""
+  "main.aux" 1777153823.90313 6794 c9ecb24b02dc5d82016f6da1019b6388 "pdflatex"
+  "main.bbl" 1777153822.35596 6331 c691cdf4ebfdbffc82036bfc2f27491d "bibtex main"
+  "main.out" 1777153823.90484 4665 c150601273a9a5b0abe16652507377dd "pdflatex"
+  "main.tex" 1777153812.56188 34886 8bbe20533792af131b0b9ec7fca732fd ""
   "sbc-template.sty" 1776804846.97197 5281 f60233dbabaac345ab9dfcfe5d9e298f ""
   (generated)
   "main.aux"
