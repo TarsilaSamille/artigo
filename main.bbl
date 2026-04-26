@@ -29,13 +29,6 @@ Campbell, Y.~M. et~al. (2019).
 \newblock Accessed: 2026-04-23.
 \newblock \url{https://ai.google.dev/gemini-api/docs/models/gemini}.
 
-\bibitem[{Google Cloud} 2025]{vertex_ai}
-{Google Cloud} (2025).
-\newblock {Gemini 2.5 Flash} on {Vertex AI}.
-\newblock Accessed: 2025-12-22.
-\newblock
-  \url{https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini}.
-
 \bibitem[{Hugging Face} 2024]{transformersjs}
 {Hugging Face} (2024).
 \newblock {Transformers.js}.
@@ -115,10 +108,9 @@ Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.~N.,
   Kaiser, {\L}., and Polosukhin, I. (2017).
 \newblock Attention is all you need.
 \newblock In {\em Advances in Neural Information Processing Systems},
-  volume~30, pages 5998--6008.
+  volume~30.
 \newblock Accessed: 2025-12-22.
-\newblock
-  \url{https://proceedings.neurips.cc/paper/2017/hash/3f5ee243-7b1b-4501-9a50-305c72d3acce-Abstract.html}.
+\newblock \url{https://arxiv.org/abs/1706.03762}.
 
 \bibitem[{Vercel Inc.} 2025]{vercel_platform}
 {Vercel Inc.} (2025).

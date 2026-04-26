@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.17)  26 APR 2026 00:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.17)  26 APR 2026 02:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -409,6 +409,14 @@ Package microtype Info: Loading configuration file microtype.cfg.
 File: microtype.cfg 2025/02/11 v3.2a microtype main configuration file (RS)
 )
 LaTeX Info: Redefining \microtypesetup on input line 3065.
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip60
+\enit@outerparindent=\dimen195
+\enit@toks=\toks33
+\enit@inbox=\box62
+\enit@count@id=\count315
+\enitdp@description=\count316
 )
 Package hyperref Info: Option `bookmarksopen' set `true' on input line 30.
 Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 30.
@@ -421,8 +429,8 @@ LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 7
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count315
-\l__pdf_internal_box=\box62
+\l__color_backend_stack_int=\count317
+\l__pdf_internal_box=\box63
 ) (./main.aux)
 \openout1 = `main.aux'.
 
@@ -480,17 +488,17 @@ LaTeX Font Info:    ... okay on input line 77.
 
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count316
-\scratchdimen=\dimen195
-\scratchbox=\box63
-\nofMPsegments=\count317
-\nofMParguments=\count318
-\everyMPshowfont=\toks33
-\MPscratchCnt=\count319
-\MPscratchDim=\dimen196
-\MPnumerator=\count320
-\makeMPintoPDFobject=\count321
-\everyMPtoPDFconversion=\toks34
+\scratchcounter=\count318
+\scratchdimen=\dimen196
+\scratchbox=\box64
+\nofMPsegments=\count319
+\nofMParguments=\count320
+\everyMPshowfont=\toks34
+\MPscratchCnt=\count321
+\MPscratchDim=\dimen197
+\MPnumerator=\count322
+\makeMPintoPDFobject=\count323
+\everyMPtoPDFconversion=\toks35
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -499,7 +507,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count322
+\c@lstlisting=\count324
 Package hyperref Info: Link coloring ON on input line 77.
 (./main.out) (./main.out)
 \@outlinefile=\write3
@@ -554,6 +562,12 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
+LaTeX Warning: Citation `vertex_ai' on page 1 undefined on input line 82.
+
+
+LaTeX Warning: Citation `vertex_ai' on page 1 undefined on input line 86.
+
+
 
 [1
 
@@ -571,7 +585,7 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 
 [2]
-<fig_arch_highres.png, id=119, 900.36375pt x 1159.33125pt>
+<fig_arch_highres.png, id=116, 900.36375pt x 1159.33125pt>
 File: fig_arch_highres.png Graphic file (type png)
 <use fig_arch_highres.png>
 Package pdftex.def Info: fig_arch_highres.png  used on input line 128.
@@ -596,16 +610,26 @@ s been already used, duplicate ignored
                                                   \__shipout_drop_firstpage_...
 l.146 
        <./fig_arch_highres.png>]
-<fig_pipeline_highres.png, id=145, 900.36375pt x 840.13875pt>
+<fig_pipeline_highres.png, id=143, 900.36375pt x 840.13875pt>
 File: fig_pipeline_highres.png Graphic file (type png)
 <use fig_pipeline_highres.png>
 Package pdftex.def Info: fig_pipeline_highres.png  used on input line 165.
 (pdftex.def)             Requested size: 426.79135pt x 398.2496pt.
+<fig_main_v4.png, id=144, 1987.425pt x 1405.25pt>
+File: fig_main_v4.png Graphic file (type png)
+<use fig_main_v4.png>
+Package pdftex.def Info: fig_main_v4.png  used on input line 172.
+(pdftex.def)             Requested size: 362.77525pt x 256.49352pt.
+<fig_analysis_v4.png, id=145, 1987.425pt x 1606.0pt>
+File: fig_analysis_v4.png Graphic file (type png)
+<use fig_analysis_v4.png>
+Package pdftex.def Info: fig_analysis_v4.png  used on input line 179.
+(pdftex.def)             Requested size: 362.77525pt x 293.13545pt.
 (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 173.
+nput line 187.
 
 
 [5]
@@ -615,80 +639,207 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.189 \begin{enumerate}
-                        <./fig_pipeline_highres.png>]
-Underfull \hbox (badness 5970) in paragraph at lines 195--196
-[]\OT1/ptm/m/n/12 (+20) To han-dle this high-dimensional con-text, the sys-tem 
-uti-lizes \OT1/ptm/b/n/12 (+20) Google
- []
+l.204     \item
+                \textbf{Deconstruction}: Identifying the grammatical structu...
+ <./fig_pipeline_highres.png>]
 
-
-Underfull \hbox (badness 1152) in paragraph at lines 195--196
-\OT1/ptm/b/n/12 (+20) Gem-ini 2.5 Flash \OT1/ptm/m/n/12 (+20) [[]], se-lected f
-or its 1-million-token win-dow
- []
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2024/09/23 1.10c listings language file
-)
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 2
-00.
-(/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/omsptm.fd
-File: omsptm.fd 
-)
-LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 200.
-<fig_main_v4.png, id=185, 1987.425pt x 1405.25pt>
-File: fig_main_v4.png Graphic file (type png)
-<use fig_main_v4.png>
-Package pdftex.def Info: fig_main_v4.png  used on input line 218.
-(pdftex.def)             Requested size: 362.77525pt x 256.49352pt.
-<fig_analysis_v4.png, id=186, 1987.425pt x 1606.0pt>
-File: fig_analysis_v4.png Graphic file (type png)
-<use fig_analysis_v4.png>
-Package pdftex.def Info: fig_analysis_v4.png  used on input line 225.
-(pdftex.def)             Requested size: 362.77525pt x 293.13545pt.
-<fig_debug_v4.png, id=187, 1987.425pt x 2007.5pt>
-File: fig_debug_v4.png Graphic file (type png)
-<use fig_debug_v4.png>
-Package pdftex.def Info: fig_debug_v4.png  used on input line 232.
-(pdftex.def)             Requested size: 362.77525pt x 366.41931pt.
-
-
-[7]
-
-[8
+[7
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.244 \end{enumerate}
-                     
+l.204     \item \textbf
+                       {Deconstruction}: Identifying the grammatical structu...
+
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.244 \end{enumerate}
-                      <./fig_main_v4.png (PNG copy)> <./fig_analysis_v4.png (PN
-G copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 255--256
+l.204     \item \textbf
+                       {Deconstruction}: Identifying the grammatical structu...
+ <./fig_main_v4.png (PNG copy)> <./fig_analysis_v4.png (PNG copy)>] (/usr/local
+/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
+)
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 2
+14.
+(/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 214.
+
+
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 250--251
 []\OT1/ptm/m/n/12 (+20) To ex-e-cute the lo-cal re-ranking ef-fi-ciently, the e
 m-bed-ding model,
  []
 
 
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
 
-[9
-pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.256 
-       <./fig_debug_v4.png (PNG copy)>]
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.270 ...�� tunuk duoh iyoh moꞌ pinuna ke kota.}
+                                                  ''
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.270 ...�� tunuk duoh iyoh moꞌ pinuna ke kota.}
+                                                  ''
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.273 ...ule is the Past Tense Marker \emph{moꞌ}
+                                                   from Context D. It states...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.273 ...om Context D. It states that \emph{moꞌ}
+                                                   is consistently placed be...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.273 ...d'', the subject pronoun and \emph{moꞌ}
+                                                   are often repeated before...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+
+[9]
+
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.277 ...d on Example B.1 (\emph{iyoh moꞌ mokat}
+                                                  ) and C.5 (\emph{Maria mo�...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.277 ...moꞌ mokat}) and C.5 (\emph{Maria moꞌ}
+                                                  ), \emph{Iyoh} (she/he) co...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.277 ...Iyoh} (she/he) combined with \emph{moꞌ}
+                                                   is appropriate for the su...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.285 ...ammatical rule, the particle \emph{moꞌ}
+                                                   is placed after the subje...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.285 ...ꞌ tunuk duoh iyoh moꞌ pinuna ke kota}
+                                                  .
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ꞌ (U+A78C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.285 ...ꞌ tunuk duoh iyoh moꞌ pinuna ke kota}
+                                                  .
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
 
 [10]
 
-[11] (./main.bbl
+[11
+pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.352 
+      ] (./main.bbl
 Underfull \hbox (badness 1365) in paragraph at lines 21--25
 []\OT1/ptm/m/n/12 (+20) Google AI for De-vel-op-ers (2025a).  \OT1/ptm/m/it/12 
 (+20) Gem-ini API
@@ -696,38 +847,33 @@ Underfull \hbox (badness 1365) in paragraph at lines 21--25
 
 
 
-[12]
-
-[13])
-
-[14
-pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
- been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.368 \end{document}
-                    ]
-
-[15
+[12
 pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.368 \end{document}
-                    ] (./main.aux)
+l.31 
+     ]
+
+[13])
+
+[14] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: E296E22C05BBE7AEBEFEE60DA45B52EB;3876.
+(rerunfilecheck)             Checksum: 0754AA15BED3E325EF59FDFBD1DA955D;4020.
  ) 
 Here is how much of TeX's memory you used:
- 17178 strings out of 473190
- 263464 string characters out of 5715799
- 1046713 words of memory out of 5000000
- 39720 multiletter control sequences out of 15000+600000
- 608258 words of font info for 319 fonts, out of 8000000 for 9000
+ 17522 strings out of 473190
+ 269215 string characters out of 5715799
+ 1053929 words of memory out of 5000000
+ 40039 multiletter control sequences out of 15000+600000
+ 609668 words of font info for 333 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,11n,79p,1188b,2184s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
@@ -743,10 +889,10 @@ texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist
 /fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/ty
 pe1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/ti
 mes/utmri8a.pfb>
-Output written on main.pdf (15 pages, 908108 bytes).
+Output written on main.pdf (14 pages, 638809 bytes).
 PDF statistics:
- 387 PDF objects out of 1000 (max. 8388607)
- 333 compressed objects within 4 object streams
+ 379 PDF objects out of 1000 (max. 8388607)
+ 327 compressed objects within 4 object streams
  101 named destinations out of 1000 (max. 500000)
- 80546 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 80541 words of extra memory for PDF output out of 89155 (max. 10000000)
 

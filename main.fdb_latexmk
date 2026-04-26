@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1777175488.18392 "main.aux" "main.bbl" "main" 1777175491.01227 0
-  "./references.bib" 1777153274.29625 7856 c74dbffb15acd0bd88beb1236e82b9f8 ""
+["bibtex main"] 1777179665.40666 "main.aux" "main.bbl" "main" 1777179668.51944 0
+  "./references.bib" 1777179663.39193 7539 ba49387e59cffaa90d6a824fd628e264 ""
   "./sbc.bst" 1776991676.54921 22370 b7580b5ffc692f96d81a2b185ee01582 ""
-  "main.aux" 1777175490.27645 6311 423b6aa599c8f4cd75eb325fe649ef11 "pdflatex"
+  "main.aux" 1777179667.70292 6068 0b4acd2d6a6d48439b42187fbc3cb0f1 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1777175488.43512 "main.tex" "main.pdf" "main" 1777175491.01269 0
+["pdflatex"] 1777179665.68943 "main.tex" "main.pdf" "main" 1777179668.51977 2
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -104,6 +104,7 @@
   "/usr/local/texlive/2025/texmf-dist/tex/latex/base/inputenc.sty" 1738182759 5048 0270515b828149155424600fd2d58ac5 ""
   "/usr/local/texlive/2025/texmf-dist/tex/latex/base/size12.clo" 1738182759 8449 ffe4ba2166a344827c3a832d1d5e0a91 ""
   "/usr/local/texlive/2025/texmf-dist/tex/latex/booktabs/booktabs.sty" 1579038678 6078 f1cb470c9199e7110a27851508ed7a5c ""
+  "/usr/local/texlive/2025/texmf-dist/tex/latex/enumitem/enumitem.sty" 1738874546 52272 63d293bc0d496619edb57585740861a2 ""
   "/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty" 1579991033 13886 d1306dcf79a944f6988e688c1785f9ce ""
   "/usr/local/texlive/2025/texmf-dist/tex/latex/etoolbox/etoolbox.sty" 1739306980 46850 d87daedc2abdc653769a6f1067849fe0 ""
   "/usr/local/texlive/2025/texmf-dist/tex/latex/float/float.sty" 1137110151 6749 16d2656a1984957e674b149555f1ea1d ""
@@ -159,13 +160,12 @@
   "caption2.sty" 1766181038 15189 50845fba222dc25666abc3397b231fab ""
   "fig_analysis_v4.png" 1776472153.87814 150689 eb2b816cea8676b417cc228edfc10a4a ""
   "fig_arch_highres.png" 1776984642.08993 131242 1b2daa832d60caa304cdd7c3a1d35fd6 ""
-  "fig_debug_v4.png" 1776472154.11303 270174 50c8551dc189a07534bebc658b88155a ""
   "fig_main_v4.png" 1776472150.60647 92046 445e7281c326e231ef7b9c9b5ef276e6 ""
   "fig_pipeline_highres.png" 1776984643.74853 108915 8a1056420c34d72f61f4086c06f0437a ""
-  "main.aux" 1777175490.27645 6311 423b6aa599c8f4cd75eb325fe649ef11 "pdflatex"
-  "main.bbl" 1777175488.42624 6093 1b6e8d7bcb450046049396d0c6732f02 "bibtex main"
-  "main.out" 1777175490.27803 3876 e296e22c05bbe7aebefee60da45b52eb "pdflatex"
-  "main.tex" 1777175483.89588 31834 5db49b5ee0ddc0dcf3e96fff1df3b1c0 ""
+  "main.aux" 1777179667.70292 6068 0b4acd2d6a6d48439b42187fbc3cb0f1 "pdflatex"
+  "main.bbl" 1777179665.67101 5779 41942fa4f08e735b0edcd634aa2f46de "bibtex main"
+  "main.out" 1777179667.70562 4020 0754aa15bed3e325ef59fdfbd1da955d "pdflatex"
+  "main.tex" 1777179398.78671 33161 3a3f4861e310a50df28373dc4fb8d81a ""
   "sbc-template.sty" 1776804846.97197 5281 f60233dbabaac345ab9dfcfe5d9e298f ""
   (generated)
   "main.aux"

@@ -3,44 +3,46 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: sbc.bst
 Database file #1: references.bib
-You've used 20 entries,
+Warning--I didn't find a database entry for "vertex_ai"
+You've used 19 entries,
             1990 wiz_defined-function locations,
-            593 strings with 7596 characters,
-and the built_in function-call counts, 7802 in all, are:
-= -- 809
-> -- 305
-< -- 19
-+ -- 105
-- -- 102
-* -- 588
-:= -- 1381
-add.period$ -- 91
-call.type$ -- 20
-change.case$ -- 146
-chr.to.int$ -- 19
-cite$ -- 20
-duplicate$ -- 314
-empty$ -- 515
-format.name$ -- 127
-if$ -- 1548
+            589 strings with 7407 characters,
+and the built_in function-call counts, 7320 in all, are:
+= -- 751
+> -- 298
+< -- 17
++ -- 103
+- -- 100
+* -- 558
+:= -- 1310
+add.period$ -- 87
+call.type$ -- 19
+change.case$ -- 140
+chr.to.int$ -- 18
+cite$ -- 19
+duplicate$ -- 292
+empty$ -- 482
+format.name$ -- 124
+if$ -- 1441
 int.to.chr$ -- 2
 int.to.str$ -- 0
 missing$ -- 11
-newline$ -- 134
-num.names$ -- 60
-pop$ -- 115
+newline$ -- 128
+num.names$ -- 57
+pop$ -- 113
 preamble$ -- 1
-purify$ -- 147
+purify$ -- 141
 quote$ -- 0
-skip$ -- 247
+skip$ -- 222
 stack$ -- 0
-substring$ -- 435
-swap$ -- 50
-text.length$ -- 5
+substring$ -- 383
+swap$ -- 39
+text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 120
+type$ -- 114
 warning$ -- 0
-while$ -- 54
+while$ -- 49
 width$ -- 0
-write$ -- 312
+write$ -- 297
+(There was 1 warning)

@@ -13,7 +13,7 @@
 \usepackage{xurl}
 \usepackage{array}
 \usepackage{microtype}
-
+\usepackage{enumitem} 
 % ============================================================================
 % HYPERREF CONFIGURATION: Make bibliography URLs clickable
 % ============================================================================
@@ -148,7 +148,7 @@ The core of the Bidayuh Jagoy Translator's efficacy lies in its Multi-Staged Con
 \label{sec:context_composition}
 Before formal retrieval, a \textbf{Preliminary Step (Keyword Extraction)} identifies semantic anchors (e.g., ``water'', ``flows'') within the user query. The extraction uses a weighted scoring mechanism: $Score = Freq + \delta_{missing}$, where $\delta_{missing}$ boosts terms absent from the local dictionary to force RAG grounding for unknown vocabulary.
 
-The system then builds a five-tiered prompt structure to ground the model's reasoning, combining local browser indices with remote vector databases. We depict this using the project's core validated dataset, specifically the imperative phrase: \textit{``Tell these stones to become bread.''} (illustrated in Figure \ref{fig:analysis}):
+The system then builds a five-tiered prompt structure to ground the model's reasoning, combining local browser indices with remote vector databases. We depict this using the project's core dataset, specifically the imperative phrase: \textit{``Tell these stones to become bread.''} (illustrated in Figure \ref{fig:main_ui} and \ref{fig:analysis}):
 
 \begin{enumerate}
     \item \textbf{Context A - Local Glossary Lookups (Lexical Anchor)}: Executes direct queries against a local JSON dictionary. For our example, it maps \textit{stone} $\rightarrow$ \textit{batuh}. This provides 1:1 lexical grounding, preventing ``lexical drift'' where the LLM might hallucinate standard Malay (\textit{batu}).
@@ -165,6 +165,20 @@ This complete 5-stage sequential assembly pattern is visually structured in Figu
 \includegraphics[width=1.0\textwidth]{fig_pipeline_highres.png}
 \caption{The 5-Stage Context Assembly Pipeline.}
 \label{fig:pipeline}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_main_v4.png}
+\caption{Bidayuh Jagoy Translator}
+\label{fig:main_ui}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_analysis_v4.png}
+\caption{Translation Analysis Trace}
+\label{fig:analysis}
 \end{figure}
 
 \subsection{Client-Side Re-ranking Algorithm}
@@ -192,7 +206,7 @@ Standard Foundation Models cannot translate Bidayuh Jagoy natively due to data s
     \item \textbf{Synthesis}: Assembling the final sentence.
 \end{enumerate}
 
-To handle this high-dimensional context, the system utilizes \textbf{Google Gemini 2.5 Flash} \cite{vertex_ai}, selected for its 1-million-token window \cite{data_studios_gemini}. The feasibility of this structured synthesis is further detailed in Section \ref{sec:fat_client}, which discusses the local execution model. An explicit breakdown of this reasoning prompt is provided in Figure \ref{fig:analysis}.
+To handle this high-dimensional context, the system utilizes \textbf{Google Gemini 2.5 Flash}, selected for its 1-million-token window \cite{data_studios_gemini}. The feasibility of this structured synthesis is further detailed in Section \ref{sec:fat_client}, which discusses the local execution model. An explicit breakdown of this reasoning prompt is provided in Figure \ref{fig:analysis}.
 
 \begin{lstlisting}[language=Java, basicstyle=\footnotesize, frame=single, breaklines=true, caption={Reasoning Chain}]
 ## 5. Output Format (Chain-of-Thought)
@@ -213,26 +227,7 @@ Provide a JSON object with:
 \`\`\``;
 \end{lstlisting}
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_main_v4.png}
-\caption{Bidayuh Jagoy Translator}
-\label{fig:main_ui}
-\end{figure}
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_analysis_v4.png}
-\caption{Translation Analysis Trace}
-\label{fig:analysis}
-\end{figure}
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_debug_v4.png}
-\caption{Full Prompt (Debug) Trace}
-\label{fig:debug_trace}
-\end{figure}
 
 \subsection{Corpus Curation and Model Management}
 The system's knowledge base relies on a curated parallel corpus derived from New Testament verses provided by community translators, aligned with an English reference text. Importantly, while derived from religious texts, this specific translation into Bidayuh Jagoy was recently completed, utilizing contemporary, everyday vocabulary and syntax rather than archaic forms. This ensures applicability to modern conversational queries. To construct the lexical dictionary, we implemented a probabilistic alignment pipeline:
@@ -268,24 +263,29 @@ This "Human-in-the-loop" strategy mitigates the absence of standardized benchmar
 
 
 \subsection{Qualitative Case Study}
-To evaluate linguistic fidelity, we analyze real system outputs from the community validation log (Validation ID: 57 and 54).
+To evaluate linguistic fidelity, we analyze one real system output from the community validation log.
 
-\begin{itemize}
-    \item \textbf{Complex Theological Query}:
-    \begin{itemize}
-        \item \textit{Input}: "He will command his angels concerning you, and they will lift you up in their hands, so that you will not strike your foot against a stone."
-        \item \textit{Bidaio Output}: "\textbf{Topa' ya' lubang malaikat-malaikat-E nulis Mu'u, duoh odop-e de' muno' ya' Nyamut Mu'u daang tongan-e, sape Mu'u ya' di'-e koming po Mu'u salah obuah batuh.}"
-        \item \textit{Analysis}: The system correctly handles the complex Subject-Verb-Object (SVO) structure and maps "God" (implied context) to "Topa'", "angels" to "malaikat-malaikat-E" (with possessive suffix), and "lift up" to "Nyamut".
-    \end{itemize}
-
-    \item \textbf{Idiomatic/Imperative phrasing}:
-    \begin{itemize}
-        \item \textit{Input}: "tell these stones to become bread."
-        \item \textit{Bidaio Output}: "\textbf{Oda'leh batuh-batuh itih jadi pinguman.}"
-        \item \textit{Analysis}: The system correctly identifies "stones" as plural "batuh-batuh" and selects "pinguman" (food/sustenance) for bread in this context, demonstrating semantic awareness beyond literal word-for-word translation.
-    \end{itemize}
+    \begin{itemize}[leftmargin=10pt]
+        \item \textit{Input}: ``She took it up, and went into the city.''
+            \item \textit{Bidaio Output}: ``\textbf{Iyoh moꞌ tunuk duoh iyoh moꞌ pinuna ke kota.}''
+        \item \textit{AI reasoning output}:
+    \begin{enumerate}[leftmargin=10pt]
+        \item \textbf{Grammatical Rule}: The most critical grammatical rule is the Past Tense Marker \emph{moꞌ} from Context D. It states that \emph{moꞌ} is consistently placed before the main verb to indicate a completed action. Based on examples like B.1, B.2, C.1, and C.2, when there are multiple past tense verbs connected by ``and'', the subject pronoun and \emph{moꞌ} are often repeated before each main verb.
+        
+        \item \textbf{Vocabulary Choice}:
+        \begin{itemize}[leftmargin=10pt]
+            \item \textit{She}: Based on Example B.1 (\emph{iyoh moꞌ mokat}) and C.5 (\emph{Maria moꞌ}), \emph{Iyoh} (she/he) combined with \emph{moꞌ} is appropriate for the subject.
+            \item \textit{took it up}: The glossary (Context A) gives \emph{ngija} for ``took''. However, for the specific phrase ``took up'', Context C.4 provides a more precise translation: \emph{tunuk} from ``took up that which he was laying on'' (\emph{tunuk amuak-e}). \emph{Tunuk} implies lifting or picking up, which fits ``took it up''. The object ``it'' is often implied or omitted in Bidayuh in such contexts.
+            \item \textit{and}: Context D explicitly states \emph{duoh} is the conjunction for ``and''.
+            \item \textit{went}: Context A provides \emph{pinuna} (relevance 9). This is consistently supported by numerous examples in Context B (B.1, B.2, B.4, B.6, B.7, B.8) and Context C (C.1, C.2, C.3, C.4, C.5).
+            \item \textit{into}: Context A provides \emph{ke} (relevance 9). This is consistently supported by examples in Context B (B.5, B.6, B.8) and Context C (C.2, C.3, C.4, C.5).
+            \item \textit{the city}: Context A provides \emph{kota} (relevance 9). This is consistently supported by examples in Context B (B.4) and Context C (C.1, C.2, C.4, C.5). The definite article ``the'' is typically omitted in Bidayuh.
+        \end{itemize}
+        
+        \item \textbf{Sentence Construction}: Following the identified grammatical rule, the particle \emph{moꞌ} is placed after the subject \emph{Iyoh} and before each main verb (\emph{tunuk} and \emph{pinuna}). The conjunction \emph{duoh} connects the two clauses. The preposition \emph{ke} precedes the destination \emph{kota}. The ``it'' in ``took it up'' is implied by the verb \emph{tunuk}. Structure: Subject + Past Tense Marker + Verb1 + Conjunction + Subject + Past Tense Marker + Verb2 + Preposition + Noun = \emph{Iyoh moꞌ tunuk duoh iyoh moꞌ pinuna ke kota}.
+    \end{enumerate}
 \end{itemize}
-These examples demonstrate the system's ability to ground the LLM in specific dialectal vocabulary and retain grammatical coherence for long-tail languages.
+This example demonstrate the system's ability to ground the LLM in specific dialectal vocabulary and retain grammatical coherence for low-resource languages. The detailed reasoning trace allows for transparent auditing and community validation, which is critical for building trust in AI-generated translations in endangered language contexts.
 
 \subsection{The Domain Shift Problem and Lexical Gaps}
 A critical challenge in low-resource translation is the \textbf{Domain Shift} between the available parallel corpus (often religious or historical) and modern conversational needs. While our primary corpus is derived from New Testament verses, it serves as a high-quality anchor for the core syntax and grammatical morphology of Bidayuh Jagoy. To bridge the gap to everyday language, the RAG pipeline relies on \textbf{Context A (Local Glossary)} and \textbf{Context E (Synonym Bridges)}. 
@@ -295,7 +295,7 @@ The local glossary is iteratively updated by native speakers to include contempo
 \subsection{Error Analysis and Fallback Mechanisms}
 Crucial to the scientific evaluation of the Bidayuh Jagoy Translator is the analysis of its failure modes. In cases where the RAG context fails to provide a specific Bidayuh Jagoy term (out-of-vocabulary), the system implements a \textbf{Graceful Degradation Strategy} via an Indonesian pivot. Specifically, the system prompt explicitly instructs Gemini 2.5 Flash to automatically translate missing terms into standard Indonesian (the regional lingua franca) instead of hallucinating Bidayuh-sounding morphology, explicitly flagging the insertion.
 
-\begin{itemize}
+\begin{itemize}[leftmargin=10pt]
     \item \textbf{Example Failure}:
     \begin{itemize}
         \item \textit{Input}: ``...the sound of a thousand drums.''
@@ -304,30 +304,9 @@ Crucial to the scientific evaluation of the Bidayuh Jagoy Translator is the anal
     \end{itemize}
 \end{itemize}
 
-This explicit signaling of uncertainty is a key strength. It prevents the propagation of ``silent errors'' and directly informs the community-driven correction loop. Native speakers can quickly identify these flags in the translation logs and provide the correct Bidayuh term (e.g., ``ribu''), which is then used to update the central glossary, closing the RAG knowledge gap for future users.
+This explicit signaling of uncertainty is a key strength. It prevents the propagation of ``silent errors'' and directly informs the community-driven correction loop. Native speakers can quickly identify these flags in the translation logs and provide the correct Bidayuh term, which is then used to update the central glossary, closing the RAG knowledge gap for future users.
 
-\section{Conclusion}
-
-The Bidayuh Jagoy Translator represents a synthesis of advanced neural search and traditional rule-based linguistics. By leveraging Transformers.js, the system democratizes access to advanced RAG tools for endangered language preservation, decoupling it from expensive server-side GPU clusters. 
-
-Importantly, while demonstrated through Bidayuh Jagoy, this hybrid client-centric RAG architecture is \textbf{applicable to any low-resource language scenario} --- including regional dialects (e.g., Venetian, Sicilian), creoles (e.g., Tok Pisin), minority languages (e.g., Sorbian, Romansh), and any language on the UNESCO Red List \cite{unesco2010atlas}. The minimal requirements are: (1) a small parallel corpus ($\sim$2,000+ sentence pairs), (2) community involvement for validation, and (3) willingness to operate within a browser-based deployment model.
-
-Future work will explore a ``Fully Offline Mode'' by integrating small-scale LLMs (e.g., Gemma 2B \cite{gemma_2024} or TinyLlama \cite{zhang2024tinyllama}) directly into the browser via WebGPU. This would eliminate the dependency on cloud connectivity entirely, creating a truly resilient and private digital archive for the Bidayuh community. Furthermore, we aim to implement a \textbf{Graph-based RAG} approach to better capture the complex kinship and theological relations inherent in the Bidayuh Jagoy oral tradition, as well as exploring \textbf{audio-to-text integration} to support older generations of speakers who predominantly use the spoken form. To ensure continuous and consistent validation, we are developing a \textbf{WhatsApp-based validation system}, which distributes daily translation tasks (5 words or phrases per day) to voluntary native speakers, allowing for real-time iterative corpus refinement.
-
-\bibliographystyle{sbc}
-\bibliography{references}
-
-\section*{Reproducibility and Availability}
-\noindent The complete system is publicly available to support reproducibility and enable adaptation to other low-resource languages:
-\begin{itemize}
-    \item \textbf{Production System}: \url{https://bidayuhjagoy.vercel.app/}
-    \item \textbf{Source Code}: \url{https://github.com/TarsilaSamille/bidayuhjagoy}
-    \item \textbf{Technology Stack}: FastAPI (backend), Vanilla JavaScript (frontend), Transformers.js (client-side AI), Supabase (\texttt{pgvector} database)
-    \item \textbf{Dataset}: Available upon request to the Bidayuh community for research purposes
-\end{itemize}
-
-\appendix
-\section{Key System Specifications}
+\subsection{System Specifications and Performance Benchmarks}
 
 Table~\ref{tab:specs} summarises the key components, technologies, and their roles within the Bidayuh Jagoy Translator system, while Table~\ref{tab:latency} provides benchmark metrics for the client-side execution modes.
 
@@ -364,5 +343,28 @@ Remote-only RAG & N/A & 800+ ms (RTT) & Server-dependent \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\section{Conclusion}
+
+The Bidayuh Jagoy Translator represents a synthesis of advanced neural search and traditional rule-based linguistics. By leveraging Transformers.js, the system democratizes access to advanced RAG tools for endangered language preservation, decoupling it from expensive server-side GPU clusters. 
+
+Importantly, while demonstrated through Bidayuh Jagoy, this hybrid client-centric RAG architecture is \textbf{applicable to any low-resource language scenario} --- including regional dialects (e.g., Venetian, Sicilian), creoles (e.g., Tok Pisin), minority languages (e.g., Sorbian, Romansh), and any language on the UNESCO Red List \cite{unesco2010atlas}. The minimal requirements are: (1) a small parallel corpus ($\sim$2,000+ sentence pairs), (2) community involvement for validation, and (3) willingness to operate within a browser-based deployment model.
+
+Future work will explore a ``Fully Offline Mode'' by integrating small-scale LLMs (e.g., Gemma 2B \cite{gemma_2024} or TinyLlama \cite{zhang2024tinyllama}) directly into the browser via WebGPU. This would eliminate the dependency on cloud connectivity entirely, creating a truly resilient and private digital archive for the Bidayuh community.
+ To ensure continuous and consistent validation, we are developing a \textbf{WhatsApp-based validation system}, which distributes daily translation tasks (5 words or phrases per day) to voluntary native speakers, allowing for real-time iterative corpus refinement.
+
+\bibliographystyle{sbc}
+\bibliography{references}
+
+\section*{Reproducibility and Availability}
+\noindent The complete system is publicly available to support reproducibility and enable adaptation to other low-resource languages:
+\begin{itemize}
+    \item \textbf{Production System}: \url{https://bidayuhjagoy.vercel.app/}
+    \item \textbf{Source Code}: \url{https://github.com/TarsilaSamille/bidayuhjagoy}
+    \item \textbf{Technology Stack}: FastAPI (backend), Vanilla JavaScript (frontend), Transformers.js (client-side AI), Supabase (\texttt{pgvector} database)
+    \item \textbf{Dataset}: Available upon request to the Bidayuh community for research purposes
+\end{itemize}
+
+\appendix
 
 \end{document}
