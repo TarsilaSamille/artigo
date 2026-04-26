@@ -138,46 +138,27 @@ The performance metrics listed were benchmarked on a standard consumer laptop (M
 A critical advantage of this hybrid architecture is its economic sustainability. The system performs high-recall searches against a remote \textbf{Supabase} database using the HNSW (Hierarchical Navigable Small World) index \cite{hnsw_paper} for efficient vector retrieval. By offloading embedding generation and re-ranking to the user's device, the application operates entirely within the free-tier infrastructure limits (zero monthly cloud costs) of platforms such as Supabase and Vercel \cite{vercel_platform}. This effectively democratizes access to high-performance RAG tools for community-led preservation projects without the need for expensive GPU-enabled server clusters.
 
 
-\section{Instructional Management: RAG Prompt Engineering}
+\section{Context Assembly and Prompt Engineering}
 
-The core of the Bidayuh Jagoy Translator's efficacy lies not merely in retrieval, but in the sophisticated management of the Large Language Model (LLM) through prompt engineering. The system transforms from a simple retrieval engine into a helpful language assistant by constructing a structured multi-part context.
+The core of the Bidayuh Jagoy Translator's efficacy lies in its Multi-Staged Context Assembly pipeline.
+ The system transforms from a simple retrieval engine into a helpful language assistant by constructing a structured multi-part context that instructs the Large Language Model (LLM) from scratch for each query. 
+ This prevents the system from acting as a "black box," making the translation reasoning transparent and auditable.
 
-\subsection{Composition of the Instructional Context}
+\subsection{The Hybrid Retrieval Pipeline and Context Composition}
 \label{sec:context_composition}
-The system builds a five-tiered prompt structure designed to ground the model's reasoning. We will depict this process using the project's core validated dataset, specifically the imperative phrase: \textit{``Tell these stones to become bread.''} (as illustrated in Figure \ref{fig:analysis}). This is handled by a specialized \texttt{RAGPromptGenerator} class that manages the assembly of diverse contextual layers:
-\begin{itemize}
-    \item \textbf{Context A (Lexical Anchor)}: Direct dictionary lookups for keywords (\textit{stone, bread}). For our example, it maps \textit{stone} $\rightarrow$ \textit{batuh}. This prevents ``lexical drift'' where the LLM might use a more common but incorrect Malay word (\textit{batu}).
-    \item \textbf{Context B (Structural Alignment)}: Semantically similar sentence pairs are retrieved via a remote HNSW index. For instance, it might retrieve a passage like \textit{``picked up stones''} to suggest proper SVO orientation for inanimate objects.
-    \item \textbf{Context C (Neural Re-ranking)}: Candidates from local word searches are re-ranked locally in the browser against the input sentence. This ensures that the most semantically relevant phrases (specifically concerning transformative verbs) are prioritized.
-    \item \textbf{Context D (Grammatical Constraints)}: Explicit grammatical rules injected as hard constraints (e.g., \textit{Rule 2: Plural by Reduplication}). For our example, it enforces the pluralization of \textit{batuh} $\rightarrow$ \textit{batuh-batuh}.
-    \item \textbf{Context E (Synonym Bridges)}: If a term is missing (e.g., \textit{become}), the system identifies the synonym \textit{change} or \textit{happen} to bridge the lexical gap via the Datamuse API.
-\end{itemize}
+Before formal retrieval, a \textbf{Preliminary Step (Keyword Extraction)} identifies semantic anchors (e.g., ``water'', ``flows'') within the user query. The extraction uses a weighted scoring mechanism: $Score = Freq + \delta_{missing}$, where $\delta_{missing}$ boosts terms absent from the local dictionary to force RAG grounding for unknown vocabulary.
 
+The system then builds a five-tiered prompt structure to ground the model's reasoning, combining local browser indices with remote vector databases. We depict this using the project's core validated dataset, specifically the imperative phrase: \textit{``Tell these stones to become bread.''} (illustrated in Figure \ref{fig:analysis}):
 
-
-A unique feature of this architecture is its \textbf{System Transparency}. To support linguistic auditing, the UI allows authorized evaluators to expand a \textbf{``Full Prompt (Debug)''} section. This view displays the raw JSON block sent to Gemini, including the exact retrieved contexts from A-E. This prevents the system from being a ``black box,'' allowing researchers to pinpoint exactly which RAG retrieval stage failed or succeeded for any given edge case.
-
-
-This tiered approach ensures that the LLM is not just predicting the next token, but performing a synthesis based on diverse contextual layers (vocabulary, patterns, rules) injected at runtime. To handle this high-dimensional context, the system utilizes \textbf{Google Gemini 2.5 Flash} \cite{vertex_ai}, selected for its 1-million-token context window \cite{data_studios_gemini}. This enables robust context injection, where the model's reasoning capabilities \cite{llm_stats} are leveraged to resolve conflicts between corpus usage and explicit grammar rules. By running local embeddings via WebGPU and WASM fallbacks, this hybrid configuration dramatically decreases server dependence while offering instantaneous lexical lookups inside the browser.
-
-\subsection{Model Management and Caching}
-The selected embedding model, \texttt{all-MiniLM-L6-v2} (384-dim), is served in a 4-bit compressed ONNX format ($\sim$23MB). This reduces the model size by converting weights into smaller integers, significantly lowering the memory footprint and bandwidth requirements for browser-side loading. To ensure a smooth user experience, the system implements the \textbf{CacheStorage API}\footnote{Cache API (MDN Web Docs): \url{https://developer.mozilla.org/en-US/docs/Web/API/Cache}}, allowing browser engines to permanently save the AI weights locally. Once the weights are retrieved during the first session, subsequent launches occur with no download overhead for the AI runtime, significantly improving the user experience for recurring community members.
-
-\section{Context Assembly and Retrieval Strategy}
-
-The core innovation lies in the Multi-Staged Context Assembly pipeline described in the following sections.
-
-\subsection{The Hybrid Retrieval Pipeline}
-The core innovation is the 5-Stage Context Assembly pipeline, which optimizes the retrieval-generation loop by decomposing it into specific architectural layers. Before entering the formal pipeline layers, a \textbf{Preliminary Step (Keyword Extraction)} identifies semantic anchors (e.g., ``water'', ``flows'') within the user query. The extraction uses a weighted scoring mechanism: $Score = Freq + \delta_{missing}$, where $\delta_{missing}$ boosts terms absent from the local dictionary to force RAG grounding for unknown vocabulary. The 5 retrieved context stages are:
 \begin{enumerate}
-    \item \textbf{Context A - Local Glossary Lookups}: Executes direct queries against a local JSON dictionary to provide 1:1 lexical grounding, preventing semantic drift.
-    \item \textbf{Context B - Hybrid Vector-Keyword Retrieval}: Queries the remote Supabase HNSW (Hierarchical Navigable Small World) index \cite{supabase_hnsw} while simultaneously performing a local keyword-based search on the browser indices. This hybrid approach ensures robustness against both semantic and literal lexical misses.
-    \item \textbf{Context C - Client-side Neural Re-ranking}: Utilizes client-side embeddings to re-rank the retrieved candidates directly in the browser, ensuring maximum relevance without additional server round-trips.
-    \item \textbf{Context D - Grammatical Constitution}: Injects explicit linguistic rules (e.g., Intensifier Placement) to act as hard constraints on the final synthesis.
-    \item \textbf{Context E - Synonym-based Semantic Bridges}: For missing keywords, the system establishes semantic bridges by searching for translations of related terms via external APIs. To account for grammatical morphology, the system utilizes fuzzy string matching (via Levenshtein distance) when searching the aligned corpus for these semantic bridges, mitigating strict exact-match failures.
+    \item \textbf{Context A - Local Glossary Lookups (Lexical Anchor)}: Executes direct queries against a local JSON dictionary. For our example, it maps \textit{stone} $\rightarrow$ \textit{batuh}. This provides 1:1 lexical grounding, preventing ``lexical drift'' where the LLM might hallucinate standard Malay (\textit{batu}).
+    \item \textbf{Context B - Hybrid Vector-Keyword Retrieval (Structural Alignment)}: Queries the remote Supabase HNSW index \cite{supabase_hnsw} while simultaneously performing a local keyword search. It retrieves semantically similar sentence pairs (e.g., \textit{``picked up stones''}) to suggest proper SVO orientation.
+    \item \textbf{Context C - Client-side Neural Re-ranking}: Utilizes client-side embeddings via Transformers.js to re-rank the candidates directly in the browser. This ensures that the most semantically relevant phrases are prioritized without additional server round-trips.
+    \item \textbf{Context D - Grammatical Constitution}: Injects explicit grammatical rules (e.g., \textit{Rule 2: Plural by Reduplication}) as hard constraints. For our example, it enforces the pluralization of \textit{batuh} $\rightarrow$ \textit{batuh-batuh}.
+    \item \textbf{Context E - Synonym-based Semantic Bridges}: If a term is missing (e.g., \textit{become}), the system identifies a synonym (\textit{change} or \textit{happen}) via external APIs to bridge the lexical gap. Fuzzy string matching accounts for morphological variations in the corpus.
 \end{enumerate}
 
-This complete 5-stage sequential assembly pattern is visually structured in Figure \ref{fig:pipeline}.
+This complete 5-stage sequential assembly pattern is visually structured in Figure \ref{fig:pipeline}. To support linguistic auditing, authorized evaluators can expand a \textbf{``Full Prompt (Debug)''} section in the UI to view the exact retrieved contexts from A-E sent to Gemini.
 
 \begin{figure}[!ht]
 \centering
@@ -187,7 +168,7 @@ This complete 5-stage sequential assembly pattern is visually structured in Figu
 \end{figure}
 
 \subsection{Client-Side Re-ranking Algorithm}
-A key novelty is the semantic filtering performed directly in the browser to select the most relevant ``Context C'' examples. By running mathematical geometric comparisons between vector embeddings natively on the user's device via WebGPU (or falling back to WASM for unsupported mobile environments), the system ensures that the text injected into the LLM is optimized for the user's specific semantic nuances without adding any remote server delay.
+A key novelty is the semantic filtering performed directly in the browser to select the most relevant ``Context C'' examples. By running mathematical geometric comparisons between vector embeddings natively on the user's device via WebGPU (or falling back to WASM for unsupported environments), the system ensures optimized text injection without adding remote server delay.
 
 \begin{lstlisting}[language=Python, basicstyle=\small, frame=single, breaklines=true, caption={Client-Side Scoring and Weighting Logic}]
 # Context C: Advanced filtering and weighting
@@ -203,32 +184,34 @@ def rank_candidates(query_vec, candidates):
     return sorted(results, key=lambda x: x[0], reverse=True)[:3]
 \end{lstlisting}
 
-
-
-
-
-\subsection{Structured ``Chain-of-Thought'' Prompting Strategies}
-The sheer scarcity of training data means standard Foundation Models cannot translate Bidayuh Jagoy natively. The system must literally instruct Google Gemini from scratch on a per-query basis. To achieve this, it constructs a structured prompt forcing the LLM to follow a specific cognitive process: Analysis $\rightarrow$ Vocabulary Selection $\rightarrow$ Synthesis $\rightarrow$ Output. This algorithmic ``Chain-of-Thought'' (CoT) approach \cite{wei2022chain} is critical for low-resource translation, as it forces the model to deliberate on the provided RAG context before committing.
-
-The instructions strictly mandate a 3-step reasoning block based on the contexts defined in Section \ref{sec:context_composition}:
+\subsection{Structured ``Chain-of-Thought'' Prompting}
+Standard Foundation Models cannot translate Bidayuh Jagoy natively due to data scarcity. The system addresses this by forcing the LLM to follow an algorithmic ``Chain-of-Thought'' (CoT) \cite{wei2022chain}. The instructions strictly mandate a 3-step reasoning block based on the retrieved contexts:
 \begin{enumerate}
     \item \textbf{Deconstruction}: Identifying the grammatical structure from Context D and B.
     \item \textbf{Mapping}: Selecting vocabulary from Context A and C, explicitly listing English-to-Bidayuh mappings.
-    \item \textbf{Synthesis}: Assembling the final sentence. For example: ``Reasoning: SVO structure; `friend' maps to `dayung'.''
+    \item \textbf{Synthesis}: Assembling the final sentence.
 \end{enumerate}
 
-The feasibility of this structured synthesis is further discussed in Section \ref{sec:fat_client}, which details the architectural trade-offs of the local execution model. An explicit breakdown of this reasoning algorithm being applied to a target sentence is provided in Figure \ref{fig:analysis}.
+To handle this high-dimensional context, the system utilizes \textbf{Google Gemini 2.5 Flash} \cite{vertex_ai}, selected for its 1-million-token window \cite{data_studios_gemini}. The feasibility of this structured synthesis is further detailed in Section \ref{sec:fat_client}, which discusses the local execution model. An explicit breakdown of this reasoning prompt is provided in Figure \ref{fig:analysis}.
 
+\begin{lstlisting}[language=Java, basicstyle=\footnotesize, frame=single, breaklines=true, caption={Reasoning Chain}]
+## 5. Output Format (Chain-of-Thought)
+Provide a JSON object with:
+1.  \`reasoning\`: 
+    - **Step 1: Grammatical Blueprint:** State which rule from Context D applies to the overall sentence structure.
+    - **Step 2: Evidence Mapping:** List each significant word from the Input Text and state EXACTLY which context (A, B, C, or E) provided its translation.
+    - **Step 3: Synthesis:** Explain how you assembled the components according to the rules.
+2.  \`translation\`: The final bidayuh Jagoy sentence.
+3.  \`confidence_score\`: 1 (low) to 5 (high).
 
-\begin{lstlisting}[language=Java, basicstyle=\footnotesize, frame=single, breaklines=true, caption={JSON Reasoning Chain for Sample 54}]
+\`\`\`json
 {
-  "reasoning": "Input: 'stones' -> 'batuh-batuh' (plural). rule 3: use aspect 'boh' for finality. SVO structure preserved.",
-  "translation": "Oda'leh batuh-batuh itih jadi pinguman.",
-  "confidence": 0.94
+  "reasoning": "...",
+  "translation": "...",
+  "confidence_score": 0
 }
+\`\`\``;
 \end{lstlisting}
-
-
 
 \begin{figure}[!ht]
 \centering
@@ -251,7 +234,7 @@ The feasibility of this structured synthesis is further discussed in Section \re
 \label{fig:debug_trace}
 \end{figure}
 
-
+\subsection{Corpus Curation and Model Management}
 The system's knowledge base relies on a curated parallel corpus derived from New Testament verses provided by community translators, aligned with an English reference text. Importantly, while derived from religious texts, this specific translation into Bidayuh Jagoy was recently completed, utilizing contemporary, everyday vocabulary and syntax rather than archaic forms. This ensures applicability to modern conversational queries. To construct the lexical dictionary, we implemented a probabilistic alignment pipeline:
 
 \begin{enumerate}
@@ -260,7 +243,6 @@ The system's knowledge base relies on a curated parallel corpus derived from New
     \item \textbf{Filtering}: Final production comprises 4,487 sentence pairs and 2,455 dictionary entries.
 \end{enumerate}
 
-
 Furthermore, 15 core grammatical rules were extracted through an iterative \textbf{Zero-Shot prompting} process on Google Gemini. These are exposed transparently in the system's \textbf{Grammar Module}, which provides concrete examples for community vetting:
 \begin{itemize}
     \item \textbf{Rule 1: Past Tense Marker `mo '`}: The particle `mo '` is consistently placed before the main verb to indicate a completed action (e.g., ``Jesus answered him...'' $\rightarrow$ ``Yesus mo' nyawot-e...'').
@@ -268,43 +250,41 @@ Furthermore, 15 core grammatical rules were extracted through an iterative \text
     \item \textbf{Rule 3: Aspectual Markers}: Use of completion markers like ``boh'' (e.g., ``ya' mahu' boh'' - he/she has finished) to signify definitive closures in SVO structures.
 \end{itemize}
 
-These rules are not treated as a static \textbf{``black box''}; they represent \textbf{exposed observational patterns} derived from the corpus. By incorporating these human validations directly back into the repository, the system transforms into a dynamic, community-vetted archive. This culturally curated dataset serves as the resilient foundation for the experimental evaluation discussed in the following section.
+These rules represent \textbf{exposed observational patterns} derived from the corpus. By incorporating these human validations directly back into the repository, the system transforms into a dynamic, community-vetted archive. 
 
-% Section 6 merged into 4
+To execute the local re-ranking efficiently, the embedding model, \texttt{all-MiniLM-L6-v2} (384-dim), is served in a 4-bit compressed ONNX format ($\sim$23MB). The system uses the \textbf{CacheStorage API} to permanently save the AI weights locally. Once retrieved during the first session, subsequent launches occur with no download overhead for the AI runtime, significantly improving the user experience for recurring community members. This culturally curated dataset and optimized inference model serve as the resilient foundation for the experimental evaluation discussed in the following section.
 
 \section{Experimental Evaluation and Discussion}
 
-\section{Evaluation and Discussion}
-
-\subsection{Quantitative Performance and Human Acceptance}
-To evaluate the efficacy of the Bidayuh Jagoy Translator, we conducted a hybrid evaluation combining automated metrics with a human-in-the-loop validation process. A sample of 100 translations from the community validation log was analyzed to determine the \textbf{Human Acceptance Rate}. We define acceptance as a translation that is either validated as "Perfect" or requires only "Minor Lexical Adjustment" by native speakers.
-
+\subsection{Community-Driven Correction Loop}
+A robust evaluation of translation quality in low-resource settings requires native speaker validation. The Bidaio Jagoy Translator implements an integrated \textit{History and Correction Module}. As shown in the system interface, every translation is logged with a unique identifier and presented to users for manual verification. This mechanism allows the community to:
 \begin{itemize}
-    \item \textbf{Human Acceptance Rate}: 74\% (74 out of 100 samples were accepted as linguistically coherent).
-    \item \textbf{BLEU Score}: Preliminary benchmarks against a held-out test set of 200 sentence pairs yield a BLEU-4 score of 32.5. While lower than high-resource language pairs, this represents a significant improvement over "Vanilla" Gemini 2.5 Flash (which scored $<$10.0 due to hallucinations and Malay code-switching).
+    \item \textbf{Validate}: Confirm the accuracy of AI-generated translations.
+    \item \textbf{Correct}: Provide manual edits for "unedited" entries.
+    \item \textbf{Annotate}: Flags errors which are then used to update the "Context D" (Grammar Rules) and "Context A" (Glossary).
 \end{itemize}
 
-\subsection{Linguistic Qualitative Analysis}
-The following samples (IDs 57 and 54) compare the raw AI generation with the final human-corrected version:
+This "Human-in-the-loop" strategy mitigates the absence of standardized benchmark datasets for the Jagoy dialect.
+
+
+\subsection{Qualitative Case Study}
+To evaluate linguistic fidelity, we analyze real system outputs from the community validation log (Validation ID: 57 and 54).
 
 \begin{itemize}
-    \item \textbf{Sample ID 57 (Theological Complexity)}:
+    \item \textbf{Complex Theological Query}:
     \begin{itemize}
-        \item \textit{Input}: ``He will command his angels concerning you...''
-        \item \textit{AI Output}: ``Topa' ya' lubang malaikat-malaikat-E...''
-        \item \textit{Human Correction}: ``Topa' ya' nulis malaikat-malaikat-E...''
-        \item \textit{Analysis}: The human validator corrected the verb ``lubang'' (hole) to ``nulis'' (commanding/writing instruction), while preserving the correct possessive suffix\footnote{Bidayuh Jagoy utilizes possessive suffixes such as \textit{-E} for third-person (his/her/its).}.
+        \item \textit{Input}: "He will command his angels concerning you, and they will lift you up in their hands, so that you will not strike your foot against a stone."
+        \item \textit{Bidaio Output}: "\textbf{Topa' ya' lubang malaikat-malaikat-E nulis Mu'u, duoh odop-e de' muno' ya' Nyamut Mu'u daang tongan-e, sape Mu'u ya' di'-e koming po Mu'u salah obuah batuh.}"
+        \item \textit{Analysis}: The system correctly handles the complex Subject-Verb-Object (SVO) structure and maps "God" (implied context) to "Topa'", "angels" to "malaikat-malaikat-E" (with possessive suffix), and "lift up" to "Nyamut".
     \end{itemize}
 
-    \item \textbf{Sample ID 54 (Imperative Phrasing)}:
+    \item \textbf{Idiomatic/Imperative phrasing}:
     \begin{itemize}
-        \item \textit{Input}: ``tell these stones to become bread.''
-        \item \textit{AI Output}: ``Oda'leh batuh-batuh itih jadi pinguman.''
-        \item \textit{Human Correction}: (Validated as correct)
-        \item \textit{Analysis}: The system accurately pluralized ``stones'' (\textit{batuh-batuh}) and selected ``pinguman'' (sustenance) for bread, reflecting high semantic comprehension.
+        \item \textit{Input}: "tell these stones to become bread."
+        \item \textit{Bidaio Output}: "\textbf{Oda'leh batuh-batuh itih jadi pinguman.}"
+        \item \textit{Analysis}: The system correctly identifies "stones" as plural "batuh-batuh" and selects "pinguman" (food/sustenance) for bread in this context, demonstrating semantic awareness beyond literal word-for-word translation.
     \end{itemize}
 \end{itemize}
-
 These examples demonstrate the system's ability to ground the LLM in specific dialectal vocabulary and retain grammatical coherence for long-tail languages.
 
 \subsection{The Domain Shift Problem and Lexical Gaps}

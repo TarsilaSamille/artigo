@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.17)  25 APR 2026 18:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.17)  26 APR 2026 00:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -571,7 +571,7 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 
 [2]
-<fig_arch_highres.png, id=131, 900.36375pt x 1159.33125pt>
+<fig_arch_highres.png, id=119, 900.36375pt x 1159.33125pt>
 File: fig_arch_highres.png Graphic file (type png)
 <use fig_arch_highres.png>
 Package pdftex.def Info: fig_arch_highres.png  used on input line 128.
@@ -594,94 +594,101 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.144 
+l.146 
        <./fig_arch_highres.png>]
-
-[5]
-<fig_pipeline_highres.png, id=170, 900.36375pt x 840.13875pt>
+<fig_pipeline_highres.png, id=145, 900.36375pt x 840.13875pt>
 File: fig_pipeline_highres.png Graphic file (type png)
 <use fig_pipeline_highres.png>
-Package pdftex.def Info: fig_pipeline_highres.png  used on input line 184.
+Package pdftex.def Info: fig_pipeline_highres.png  used on input line 165.
 (pdftex.def)             Requested size: 426.79135pt x 398.2496pt.
-
-
-[6] (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+(/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 192.
+nput line 173.
 
 
-[7
+[5]
+
+[6
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.203     return 
-                 sorted(results, key=lambda x: x[0], reverse=True)[:3] <./fig_p
-ipeline_highres.png>] (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/ls
-tlang1.sty
+l.189 \begin{enumerate}
+                        <./fig_pipeline_highres.png>]
+Underfull \hbox (badness 5970) in paragraph at lines 195--196
+[]\OT1/ptm/m/n/12 (+20) To han-dle this high-dimensional con-text, the sys-tem 
+uti-lizes \OT1/ptm/b/n/12 (+20) Google
+ []
+
+
+Underfull \hbox (badness 1152) in paragraph at lines 195--196
+\OT1/ptm/b/n/12 (+20) Gem-ini 2.5 Flash \OT1/ptm/m/n/12 (+20) [[]], se-lected f
+or its 1-million-token win-dow
+ []
+
+(/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 2
-24.
+00.
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 224.
-LaTeX Font Info:    Trying to load font information for OML+ptm on input line 2
-25.
-(/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/omlptm.fd
-File: omlptm.fd 
-)
-LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 225.
-<fig_main_v4.png, id=207, 1987.425pt x 1405.25pt>
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 200.
+<fig_main_v4.png, id=185, 1987.425pt x 1405.25pt>
 File: fig_main_v4.png Graphic file (type png)
 <use fig_main_v4.png>
-Package pdftex.def Info: fig_main_v4.png  used on input line 235.
+Package pdftex.def Info: fig_main_v4.png  used on input line 218.
 (pdftex.def)             Requested size: 362.77525pt x 256.49352pt.
-<fig_analysis_v4.png, id=208, 1987.425pt x 1606.0pt>
+<fig_analysis_v4.png, id=186, 1987.425pt x 1606.0pt>
 File: fig_analysis_v4.png Graphic file (type png)
 <use fig_analysis_v4.png>
-Package pdftex.def Info: fig_analysis_v4.png  used on input line 242.
+Package pdftex.def Info: fig_analysis_v4.png  used on input line 225.
 (pdftex.def)             Requested size: 362.77525pt x 293.13545pt.
-<fig_debug_v4.png, id=209, 1987.425pt x 2007.5pt>
+<fig_debug_v4.png, id=187, 1987.425pt x 2007.5pt>
 File: fig_debug_v4.png Graphic file (type png)
 <use fig_debug_v4.png>
-Package pdftex.def Info: fig_debug_v4.png  used on input line 249.
+Package pdftex.def Info: fig_debug_v4.png  used on input line 232.
 (pdftex.def)             Requested size: 362.77525pt x 366.41931pt.
 
 
-[8]
+[7]
 
-[9
+[8
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.261 \end{enumerate}
+l.244 \end{enumerate}
                      
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.261 \end{enumerate}
+l.244 \end{enumerate}
                       <./fig_main_v4.png (PNG copy)> <./fig_analysis_v4.png (PN
 G copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 255--256
+[]\OT1/ptm/m/n/12 (+20) To ex-e-cute the lo-cal re-ranking ef-fi-ciently, the e
+m-bed-ding model,
+ []
 
-[10
+
+
+[9
 pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.281 
+l.256 
        <./fig_debug_v4.png (PNG copy)>]
 
-[11]
+[10]
 
-[12] (./main.bbl
+[11] (./main.bbl
 Underfull \hbox (badness 1365) in paragraph at lines 21--25
 []\OT1/ptm/m/n/12 (+20) Google AI for De-vel-op-ers (2025a).  \OT1/ptm/m/it/12 
 (+20) Gem-ini API
@@ -689,56 +696,57 @@ Underfull \hbox (badness 1365) in paragraph at lines 21--25
 
 
 
+[12]
+
 [13])
 
-[14]
-
-[15
+[14
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.388 \end{document}
-                    
+l.368 \end{document}
+                    ]
+
+[15
 pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.388 \end{document}
+l.368 \end{document}
                     ] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: C150601273A9A5B0ABE16652507377DD;4665.
+(rerunfilecheck)             Checksum: E296E22C05BBE7AEBEFEE60DA45B52EB;3876.
  ) 
 Here is how much of TeX's memory you used:
- 17122 strings out of 473190
- 263018 string characters out of 5715799
- 976768 words of memory out of 5000000
- 39684 multiletter control sequences out of 15000+600000
- 607535 words of font info for 307 fonts, out of 8000000 for 9000
+ 17178 strings out of 473190
+ 263464 string characters out of 5715799
+ 1046713 words of memory out of 5000000
+ 39720 multiletter control sequences out of 15000+600000
+ 608258 words of font info for 319 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,79p,1188b,2188s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
-></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
-usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
-r/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/l
-ocal/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
-cal/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></us
-r/local/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/
-texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/local/texlive
-/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025/t
-exmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/
-fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/typ
-e1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/tim
-es/utmri8a.pfb>
-Output written on main.pdf (15 pages, 920013 bytes).
+ 75i,11n,79p,1188b,2184s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
+></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><
+/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
+sr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/
+local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
+ocal/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></u
+sr/local/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local
+/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/local/texliv
+e/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025/
+texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist
+/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/ty
+pe1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/ti
+mes/utmri8a.pfb>
+Output written on main.pdf (15 pages, 908108 bytes).
 PDF statistics:
- 403 PDF objects out of 1000 (max. 8388607)
- 347 compressed objects within 4 object streams
- 96 named destinations out of 1000 (max. 500000)
- 80570 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 387 PDF objects out of 1000 (max. 8388607)
+ 333 compressed objects within 4 object streams
+ 101 named destinations out of 1000 (max. 500000)
+ 80546 words of extra memory for PDF output out of 89155 (max. 10000000)
 

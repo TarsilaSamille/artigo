@@ -48,13 +48,6 @@ Campbell, Y.~M. et~al. (2019).
 \newblock Accessed: 2026-04-23.
 \newblock \url{https://huggingface.co/blog/gemma4}.
 
-\bibitem[{LLM Stats} 2024]{llm_stats}
-{LLM Stats} (2024).
-\newblock {Gemini Flash} series: Performance benchmarks and infrastructure
-  costs.
-\newblock Accessed: 2025-12-22.
-\newblock \url{https://llm-stats.com/models/gemini-2.5-flash}.
-
 \bibitem[Maci{\'a}-Lillo et~al. 2025]{gitnation}
 Maci{\'a}-Lillo, A., Mora, H., Jimeno-Morenilla, A., et~al. (2025).
 \newblock Ai edge cloud service provisioning for knowledge management smart
