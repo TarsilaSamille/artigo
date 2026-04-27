@@ -125,7 +125,7 @@ The fundamental separation between local and remote computational workloads is m
     \item \textbf{The Cloud Infrastructure}: A serverless subgraph (Vercel + Supabase) that handles the persistence and high-recall retrieval of the global parallel corpus via \textbf{Supabase pgvector}. This remote vector store enables the application to perform high-recall searches against the central repository without requiring users to download the entire sentence dataset upon initialization.
 \end{itemize}
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{fig_arch_highres.png}
 \caption{Hybrid Client-Centric System Architecture}
@@ -148,24 +148,18 @@ The core of the Bidayuh Jagoy Translator's efficacy lies in its Multi-Staged Con
 \label{sec:context_composition}
 Before formal retrieval, a \textbf{Preliminary Step (Keyword Extraction)} identifies semantic anchors (e.g., ``water'', ``flows'') within the user query. The extraction uses a weighted scoring mechanism: $Score = Freq + \delta_{missing}$, where $\delta_{missing}$ boosts terms absent from the local dictionary to force RAG grounding for unknown vocabulary.
 
-\begin{figure}[!h]
-\centering
-\includegraphics[width=0.9\textwidth]{fig_pipeline_highres.png}
-\caption{The 5-Stage Context Assembly Pipeline.}
-\label{fig:pipeline}
-\end{figure}
 
 The system then builds a five-tiered prompt structure to ground the model's reasoning, combining local browser indices with remote vector databases. We depict this using the project's core dataset, specifically the imperative phrase: \textit{``Tell these stones to become bread.''} (illustrated in Figure \ref{fig:main_ui} and \ref{fig:analysis}):
-\begin{figure}[!ht]
+\begin{figure}[H]
 \centering
-\includegraphics[width=1.0\textwidth]{UI.png}
+\includegraphics[width=0.85\textwidth]{UI.png}
 \caption{Bidayuh Jagoy Translator}
 \label{fig:main_ui}
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{fig_analysis_v4.png}
+\includegraphics[width=0.85\textwidth]{analysis.png}
 \caption{Translation Analysis Trace}
 \label{fig:analysis}
 \end{figure}
@@ -181,6 +175,12 @@ The system then builds a five-tiered prompt structure to ground the model's reas
 This complete 5-stage sequential assembly pattern is visually structured in Figure \ref{fig:pipeline}. To support linguistic auditing, authorized evaluators can expand a \textbf{``Full Prompt (Debug)''} section in the UI to view the exact retrieved contexts from A-E sent to Gemini.
 
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_pipeline_highres.png}
+\caption{The 5-Stage Context Assembly Pipeline.}
+\label{fig:pipeline}
+\end{figure}
 
 
 \subsection{Client-Side Re-ranking Algorithm}
@@ -261,9 +261,9 @@ A robust evaluation of translation quality in low-resource settings requires nat
     \item \textbf{Annotate}: Flags errors which are then used to update the "Context D" (Grammar Rules) and "Context A" (Glossary).
 \end{itemize}
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{history.png}
+\includegraphics[width=1.0\textwidth]{history.png}
 \caption{Translation History Module}
 \label{fig:analysis}
 \end{figure}

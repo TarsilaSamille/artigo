@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1777313510.94442 "main.aux" "main.bbl" "main" 1777313513.49636 0
+["bibtex main"] 1777318893.34121 "main.aux" "main.bbl" "main" 1777318896.67896 0
   "./references.bib" 1777179663.39193 7539 ba49387e59cffaa90d6a824fd628e264 ""
   "./sbc.bst" 1776991676.54921 22370 b7580b5ffc692f96d81a2b185ee01582 ""
-  "main.aux" 1777313512.87496 5601 fb42d9af93e3ca97ecff0ec48ac3cf60 "pdflatex"
+  "main.aux" 1777318895.91172 5601 5c22ba1165b75cb6c4615659c7561233 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1777313511.17689 "main.tex" "main.pdf" "main" 1777313513.49668 0
+["pdflatex"] 1777318893.58989 "main.tex" "main.pdf" "main" 1777318896.67945 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -156,15 +156,15 @@
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1765989187 3345744 b42ee87b684adae341eaa4fd086ce6ef ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
   "UI.png" 1777313405.5197 135812 17a84e66876e029e1d420113de398a0b ""
+  "analysis.png" 1777318499.6609 138723 2aa151618805ec7471eabf5aed2c23d7 ""
   "caption2.sty" 1766181038 15189 50845fba222dc25666abc3397b231fab ""
-  "fig_analysis_v4.png" 1776472153.87814 150689 eb2b816cea8676b417cc228edfc10a4a ""
   "fig_arch_highres.png" 1777301455.53691 63543 9e7cf10fb30e2b2354b1c198bc4749da ""
   "fig_pipeline_highres.png" 1777301457.40877 108915 8a1056420c34d72f61f4086c06f0437a ""
   "history.png" 1777312505.63462 139429 adb45565e10a6c4cad325ec657b29195 ""
-  "main.aux" 1777313512.87496 5601 fb42d9af93e3ca97ecff0ec48ac3cf60 "pdflatex"
-  "main.bbl" 1777313511.16997 5779 41942fa4f08e735b0edcd634aa2f46de "bibtex main"
-  "main.out" 1777313512.87619 3628 f45c7a7c375d7ace9f8c086553520184 "pdflatex"
-  "main.tex" 1777313506.73146 30709 9b1af708e0de662a8c7f2779ae2726d4 ""
+  "main.aux" 1777318895.91172 5601 5c22ba1165b75cb6c4615659c7561233 "pdflatex"
+  "main.bbl" 1777318893.58315 5779 41942fa4f08e735b0edcd634aa2f46de "bibtex main"
+  "main.out" 1777318895.91473 3628 f45c7a7c375d7ace9f8c086553520184 "pdflatex"
+  "main.tex" 1777318888.55844 30693 50b1aa8f23525d0b46632075fdbfc773 ""
   "sbc-template.sty" 1776804846.97197 5281 f60233dbabaac345ab9dfcfe5d9e298f ""
   (generated)
   "main.aux"
