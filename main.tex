@@ -14,6 +14,8 @@
 \usepackage{array}
 \usepackage{microtype}
 \usepackage{enumitem} 
+\usepackage{newunicodechar}
+\newunicodechar{ꞌ}{'}
 % ============================================================================
 % HYPERREF CONFIGURATION: Make bibliography URLs clickable
 % ============================================================================
@@ -26,7 +28,8 @@
     citecolor=black,
     pdfdisplaydoctitle=true,
     pdfauthor={Tarsila Samille Santos da Silveira Silva},
-    pdftitle={Bidayuh Jagoy Translator: A Hybrid Client-Centric RAG System for Low-Resource Language Preservation}
+    pdftitle={Bidayuh Jagoy Translator: A Hybrid Client-Centric RAG System for Low-Resource Language Preservation},
+    hypertexnames=false
 }
 
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
@@ -79,11 +82,11 @@
 \maketitle
 
 \begin{abstract}
-  The preservation of endangered languages constitutes a critical challenge in computational linguistics. This paper presents the Bidayuh Jagoy Translator (\url{https://bidayuhjagoy.vercel.app/}), a specialized AI platform for the Bidayuh Jagoy dialect --- a member of the Land Dayak language family, a distinct subgroup of Austronesian languages primarily spoken in the West Kalimantan region of Indonesia and parts of Sarawak, Malaysia. Using a 5-Stage Hybrid Client-Centric Retrieval-Augmented Generation (RAG) architecture, the system delegates heavy context orchestration directly to the user's browser via \textbf{Transformers.js}, an open-source library that enables neural models to run natively inside JavaScript runtimes. By synthesizing embedded retrieval, local glossary lookups, and remote vector search, it accurately grounds the Google Gemini 2.5 Flash model \cite{vertex_ai}. Preliminary evaluations confirm the technical efficacy and economic sustainability of browser-based RAG architectures, offering a resilient solution for language preservation in extreme data-scarcity scenarios.
+  The preservation of endangered languages constitutes a critical challenge in computational linguistics. This paper presents the Bidayuh Jagoy Translator (\url{https://bidayuhjagoy.vercel.app/}), a specialized AI platform for the Bidayuh Jagoy dialect --- a member of the Land Dayak language family, a distinct subgroup of Austronesian languages primarily spoken in the West Kalimantan region of Indonesia and parts of Sarawak, Malaysia. Using a 5-Stage Client-Centric Retrieval-Augmented Generation (RAG) architecture, the system delegates heavy context orchestration directly to the user's browser via \textbf{Transformers.js}, an open-source library that enables neural models to run natively inside JavaScript runtimes. By synthesizing embedded retrieval, local glossary lookups, and remote vector search, it accurately grounds the Google Gemini 2.5 Flash model. Preliminary evaluations confirm the technical efficacy and economic sustainability of browser-based RAG architectures, offering a resilient solution for language preservation in extreme data-scarcity scenarios.
 \end{abstract}
 
 \begin{resumo}
-  A preservação de línguas ameaçadas de extinção é um dos maiores desafios da linguística computacional. Este artigo apresenta o Bidayuh Jagoy Translator (\url{https://bidayuhjagoy.vercel.app/}), uma plataforma de Inteligência Artificial para o dialeto Bidayuh Jagoy, membro da família Land Dayak --- um subgrupo das línguas austronésias falado na região oeste de Kalimantan, Indonésia, e partes da Malásia. O sistema emprega uma arquitetura híbrida de Geração Aumentada por Recuperação (RAG) centrada no navegador. Ao delegar a orquestração do contexto ao dispositivo do usuário por meio do \textbf{Transformers.js} --- que executa redes neurais diretamente no navegador --- o sistema reduz custos de infraestrutura. Ao unificar buscas de dicionário local, recuperação vetorial e pontes semânticas externas, a ferramenta instrui o modelo Google Gemini 2.5 Flash \cite{vertex_ai}. As avaliações preliminares comprovam a eficácia técnica e a sustentabilidade econômica desta abordagem escalável para preservação linguística.
+  A preservação de línguas ameaçadas de extinção constitui um desafio crítico na linguística computacional. Este artigo apresenta o Bidayuh Jagoy Translator (\url{https://bidayuhjagoy.vercel.app/}), uma plataforma de IA especializada para o dialeto Bidayuh Jagoy --- um membro da família de línguas Land Dayak, um subgrupo distinto de línguas austronésias falado principalmente na região de Kalimantan Ocidental da Indonésia e partes de Sarawak, Malásia. Utilizando uma arquitetura de Geração Aumentada por Recuperação (RAG) Centrada no Cliente em 5 estágios, o sistema delega a pesada orquestração de contexto diretamente ao navegador do usuário via \textbf{Transformers.js}, uma biblioteca de código aberto que permite que modelos neurais rodem nativamente dentro de ambientes de execução JavaScript. Ao sintetizar recuperação incorporada, consultas de glossário local e busca vetorial remota, o sistema fundamenta com precisão o modelo Google Gemini 2.5 Flash. Avaliações preliminares confirmam a eficácia técnica e a sustentabilidade econômica de arquiteturas RAG baseadas em navegador, oferecendo uma solução resiliente para a preservação de idiomas em cenários de extrema escassez de dados.
 \end{resumo}
 
 
