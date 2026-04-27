@@ -46,15 +46,15 @@
     inputencoding=utf8,
     extendedchars=true,
     showstringspaces=false,
-    keywordstyle=\color{blue}\bfseries,
-    commentstyle=\color{green!60!black}\itshape,
-    stringstyle=\color{orange},
+    keywordstyle=\color{black}\bfseries,
+    commentstyle=\color{black!60!black}\itshape,
+    stringstyle=\color{black},
     numbers=left,
-    numberstyle=\tiny\color{gray},
+    numberstyle=\tiny\color{black},
     numbersep=8pt,
     frame=single,
-    rulecolor=\color{gray!20},
-    backgroundcolor=\color{gray!3},
+    rulecolor=\color{black!20},
+    backgroundcolor=\color{black!3},
     xleftmargin=12pt,
     xrightmargin=5pt,
     captionpos=b,
@@ -92,7 +92,7 @@
 
 \section{Introduction}
 
-The rapid advancement of Natural Language Processing (NLP), driven by the Transformer architecture~\cite{vaswani2017attention}, has paradoxically widened the gap between global ``high-resource'' languages and indigenous ``low-resource'' vernaculars~\cite{nekoto2020participatory}. Foundational models such as GPT-4 and Gemini are predominantly trained on web-scraped datasets, where English, Mandarin, Spanish, and standard Malay account for the vast majority of linguistic tokens~\cite{nllb2022no}.
+The rapid advancement of Natural Language Processing (NLP), driven by the Transformer architecture~\cite{vaswani2017attention}, has paradoxically widened the gap between global ``high-resource'' and ``low-resource'' languages~\cite{nekoto2020participatory}. Foundational models such as GPT-4 and Gemini are predominantly trained on web-scraped datasets, where English, Mandarin, Spanish, and standard Malay account for the vast majority of linguistic tokens~\cite{nllb2022no}.
 
 This systemic resource disparity is starkly evident in the case of Bidayuh Jagoy (also referred to under the broader ethno-linguistic cluster of Land Dayak), a distinct dialect spoken primarily in the West Kalimantan region of Indonesia and parts of Sarawak, Malaysia. It possesses a vibrant oral tradition but a small digital footprint. Its presence is confined to scattered PDFs, academic papers from institutions like Universiti Malaysia Sarawak (UNIMAS), and community blogs~\cite{unimas_repo}. Consequently, when standard LLMs attempt to process Bidayuh Jagoy, they exhibit catastrophic failure modes such as hallucination, code-switching to standard Malay, and grammatical drift~\cite{scispace_intensifiers}.
 
@@ -117,11 +117,9 @@ The system utilizes a modern serverless stack with key components including:
     \item \textbf{Local Inference}: all-MiniLM-L6-v2 (384-dimensional embeddings) running on WebGPU for client-side RAG.
 \end{itemize}
  
-\subsection{System Health and Monitoring}
-To maintain operational integrity without a permanent human administrator, the system implements a live \textbf{System Status Dashboard}. Accessible directly in the sidebar, this dashboard monitors the health of the 4 key RAG components: the local Dictionary size (2,454 words), the persistent Corpus volume (4,487 phrases), the active Grammar Rule count (15 rules), and the current LLM API status (e.g., ``$\checkmark$ Full Translation OK''). By surfacing these metrics, the system provides users with immediate feedback on the ``freshness'' of the retrieval context before a translation is even attempted. Furthermore, every translation result is accompanied by a \textbf{Confidence Level} bar (normalized on a 0.0 to 1.0 scale), informing the user of the system's internal re-ranking certainty.
+\subsection{System Architecture}
 
-
-The fundamental separation between these local and remote computational workloads is mapped in Figure \ref{fig:arch}. This \textbf{Hybrid Decentralization} strategy splits the RAG pipeline into two distinct security and compute zones:
+The fundamental separation between local and remote computational workloads is mapped in Figure \ref{fig:arch}. This \textbf{Hybrid Decentralization} strategy splits the RAG pipeline into two distinct security and compute zones:
 \begin{itemize}
     \item \textbf{The Client Layer}: Represents the user's browser, which securely manages the sensitive AI logic, local glossary state, and the generation of local embeddings for re-ranking. This ensures that user queries remain private and avoids the latency of multiple server-side embedding calls.
     \item \textbf{The Cloud Infrastructure}: A serverless subgraph (Vercel + Supabase) that handles the persistence and high-recall retrieval of the global parallel corpus via \textbf{Supabase pgvector}. This remote vector store enables the application to perform high-recall searches against the central repository without requiring users to download the entire sentence dataset upon initialization.
@@ -136,8 +134,6 @@ The fundamental separation between these local and remote computational workload
 
 \subsection{The ``Fat Client'' Philosophy} \label{sec:fat_client}
 Using Transformers.js, the browser downloads a \textbf{small 4-bit compressed model} (\texttt{Xenova/all-MiniLM-L6-v2}) and runs it natively via the ONNX Runtime. This smaller footprint allows for privacy-preserving local text comparison and significantly reduced server costs by performing semantic re-ranking without remote interference.
-
-The system supports multiple execution modes for optimal performance: WebGPU (primary) with an initial load of $\sim$23MB (cached), inference time of 15--45 ms, and low memory impact (GPU-bound); WASM (fallback) with the same initial load, inference of 120--350 ms, and moderate CPU memory impact; and remote-only RAG with no initial load but 800+ ms inference including round-trip time and server-dependent memory. These metrics were benchmarked on a standard consumer laptop (MacBook Pro, 2.6 GHz 6-Core Intel Core i7). Recognizing that indigenous communities frequently rely on mobile devices, the system is designed with an automatic execution fallback. If the client browser lacks WebGPU support (e.g., iOS Safari), Transformers.js seamlessly degrades to WebAssembly (WASM). While WASM inference introduces a slight latency increase, it guarantees ubiquitous accessibility across all devices without requiring hardware-specific backend configurations. 
 
 A critical advantage of this hybrid architecture is its economic sustainability. The system performs high-recall searches against a remote \textbf{Supabase} database using the HNSW (Hierarchical Navigable Small World) index \cite{hnsw_paper} for efficient vector retrieval. By offloading embedding generation and re-ranking to the user's device, the application operates entirely within the free-tier infrastructure limits (zero monthly cloud costs) of platforms such as Supabase and Vercel \cite{vercel_platform}. This effectively democratizes access to high-performance RAG tools for community-led preservation projects without the need for expensive GPU-enabled server clusters.
 
@@ -162,7 +158,7 @@ Before formal retrieval, a \textbf{Preliminary Step (Keyword Extraction)} identi
 The system then builds a five-tiered prompt structure to ground the model's reasoning, combining local browser indices with remote vector databases. We depict this using the project's core dataset, specifically the imperative phrase: \textit{``Tell these stones to become bread.''} (illustrated in Figure \ref{fig:main_ui} and \ref{fig:analysis}):
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=0.85\textwidth]{fig_main_v4.png}
+\includegraphics[width=1.0\textwidth]{UI.png}
 \caption{Bidayuh Jagoy Translator}
 \label{fig:main_ui}
 \end{figure}
@@ -264,6 +260,14 @@ A robust evaluation of translation quality in low-resource settings requires nat
     \item \textbf{Correct}: Provide manual edits for "unedited" entries.
     \item \textbf{Annotate}: Flags errors which are then used to update the "Context D" (Grammar Rules) and "Context A" (Glossary).
 \end{itemize}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.85\textwidth]{history.png}
+\caption{Translation History Module}
+\label{fig:analysis}
+\end{figure}
+
 
 This "Human-in-the-loop" strategy mitigates the absence of standardized benchmark datasets for the Jagoy dialect.
 

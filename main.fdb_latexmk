@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1777301870.94492 "main.aux" "main.bbl" "main" 1777301873.1555 0
+["bibtex main"] 1777313510.94442 "main.aux" "main.bbl" "main" 1777313513.49636 0
   "./references.bib" 1777179663.39193 7539 ba49387e59cffaa90d6a824fd628e264 ""
   "./sbc.bst" 1776991676.54921 22370 b7580b5ffc692f96d81a2b185ee01582 ""
-  "main.aux" 1777301872.56364 5399 d9c199d6f6d8865ad930bb073794c54d "pdflatex"
+  "main.aux" 1777313512.87496 5601 fb42d9af93e3ca97ecff0ec48ac3cf60 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1777301871.17825 "main.tex" "main.pdf" "main" 1777301873.15583 0
+["pdflatex"] 1777313511.17689 "main.tex" "main.pdf" "main" 1777313513.49668 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -29,10 +29,8 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
-  "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5.tfm" 1246382020 924 9904cf1d39e9767e7a3622f2a125a565 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm" 1246382020 928 2dc8d444221b7a635bb58038579b861a ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm" 1246382020 908 2921f8a10601f252058503cc6570e581 ""
-  "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm" 1246382020 940 75ac932a52f80982a9f8ea75d03a34cf ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm" 1246382020 940 228d6584342e91276bf566bcf9716b83 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmex10.tfm" 1136768653 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1136768653 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -49,7 +47,6 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
-  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb" 1248133631 31764 459c573c03a4949a528c2cc7f557e217 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb" 1136849748 45758 19968a0990191524e34e1994d4a31cb6 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb" 1136849748 44404 ea3d9c0311883914133975dd62a9185c ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb" 1136849748 35941 f27169cc74234d5bd5e4cca5abafaabb ""
@@ -158,15 +155,16 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1765989383 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1765989187 3345744 b42ee87b684adae341eaa4fd086ce6ef ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
+  "UI.png" 1777313405.5197 135812 17a84e66876e029e1d420113de398a0b ""
   "caption2.sty" 1766181038 15189 50845fba222dc25666abc3397b231fab ""
   "fig_analysis_v4.png" 1776472153.87814 150689 eb2b816cea8676b417cc228edfc10a4a ""
   "fig_arch_highres.png" 1777301455.53691 63543 9e7cf10fb30e2b2354b1c198bc4749da ""
-  "fig_main_v4.png" 1776472150.60647 92046 445e7281c326e231ef7b9c9b5ef276e6 ""
   "fig_pipeline_highres.png" 1777301457.40877 108915 8a1056420c34d72f61f4086c06f0437a ""
-  "main.aux" 1777301872.56364 5399 d9c199d6f6d8865ad930bb073794c54d "pdflatex"
-  "main.bbl" 1777301871.17198 5779 41942fa4f08e735b0edcd634aa2f46de "bibtex main"
-  "main.out" 1777301872.56465 3679 6f22360fefa9f62d9c98401ac7f4cb0a "pdflatex"
-  "main.tex" 1777301864.27623 32356 2f189132da452ab0c625787a6944ccc4 ""
+  "history.png" 1777312505.63462 139429 adb45565e10a6c4cad325ec657b29195 ""
+  "main.aux" 1777313512.87496 5601 fb42d9af93e3ca97ecff0ec48ac3cf60 "pdflatex"
+  "main.bbl" 1777313511.16997 5779 41942fa4f08e735b0edcd634aa2f46de "bibtex main"
+  "main.out" 1777313512.87619 3628 f45c7a7c375d7ace9f8c086553520184 "pdflatex"
+  "main.tex" 1777313506.73146 30709 9b1af708e0de662a8c7f2779ae2726d4 ""
   "sbc-template.sty" 1776804846.97197 5281 f60233dbabaac345ab9dfcfe5d9e298f ""
   (generated)
   "main.aux"
