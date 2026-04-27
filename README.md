@@ -11,7 +11,31 @@ To compile this project, you need a LaTeX distribution installed on your system:
 
 ## How to Generate the PDF
 
-### Option 1: Using `latexmk` (Recommended)
+### Option 1: Using `mise` (Recommended Task Runner)
+
+This project uses [`mise`](https://mise.jdx.dev) to manage tasks and dependencies easily.
+
+To compile the LaTeX document once:
+```bash
+mise run build
+```
+
+To watch for file changes and compile automatically in the background (live-reload):
+```bash
+mise run dev
+```
+
+To render the architecture diagrams to high-res images:
+```bash
+mise run render-arch
+```
+
+To clean up auxiliary files:
+```bash
+mise run clean
+```
+
+### Option 2: Using `latexmk` directly
 
 `latexmk` is an automated tool that handles all necessary compilation steps (including bibliography) and re-runs when needed.
 
@@ -24,7 +48,7 @@ To clean up auxiliary files after compilation:
 latexmk -c
 ```
 
-### Option 2: Manual Compilation
+### Option 3: Manual Compilation
 
 If you don't have `latexmk`, you can run the following commands in sequence:
 
