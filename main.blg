@@ -3,10 +3,9 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: sbc.bst
 Database file #1: references.bib
-Warning--I didn't find a database entry for "vertex_ai"
 You've used 19 entries,
             1990 wiz_defined-function locations,
-            589 strings with 7407 characters,
+            588 strings with 7398 characters,
 and the built_in function-call counts, 7320 in all, are:
 = -- 751
 > -- 298
@@ -45,4 +44,3 @@ warning$ -- 0
 while$ -- 49
 width$ -- 0
 write$ -- 297
-(There was 1 warning)
