@@ -1,13 +1,16 @@
 const fs = require('fs');
 const https = require('https');
+const path = require('path');
 
+const ROOT = path.join(__dirname, '..');
 const files = ['arch.mmd', 'pipeline.mmd', 'analysis.mmd'];
 
 async function generateDiagram(filename) {
-    const content = fs.readFileSync(filename, 'utf8');
+    const inputPath = path.join(ROOT, 'diagrams', filename);
+    const content = fs.readFileSync(inputPath, 'utf8');
     const base64 = Buffer.from(content).toString('base64');
     const url = `https://mermaid.ink/img/${base64}?bgColor=white`;
-    const output = `fig_${filename.replace('.mmd', '.png')}`;
+    const output = path.join(ROOT, 'figures', `fig_${filename.replace('.mmd', '.png')}`);
     
     console.log(`Generating ${output} from ${filename}...`);
     

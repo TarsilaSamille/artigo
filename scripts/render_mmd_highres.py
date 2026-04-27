@@ -2,10 +2,12 @@ import asyncio
 import os
 from playwright.async_api import async_playwright
 
-OUT = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DIAGRAMS = f"{ROOT}/diagrams"
+FIGURES = f"{ROOT}/figures"
 
 async def render_mermaid_ultrares(filename):
-    with open(f"{OUT}/{filename}.mmd", "r") as f:
+    with open(f"{DIAGRAMS}/{filename}.mmd", "r") as f:
         mmd_content = f.read()
 
     html_content = f"""
@@ -34,7 +36,7 @@ async def render_mermaid_ultrares(filename):
     </html>
     """
     
-    html_path = f"{OUT}/ultra_render.html"
+    html_path = f"{ROOT}/scripts/ultra_render.html"
     with open(html_path, "w") as f:
         f.write(html_content)
 
@@ -50,11 +52,11 @@ async def render_mermaid_ultrares(filename):
         box = await element.bounding_box()
         
         await page.screenshot(
-            path=f"{OUT}/fig_{filename}_highres.png", 
+            path=f"{FIGURES}/fig_{filename}_highres.png", 
             clip=box,
             omit_background=True
         )
-        print(f"   Ultra-res fig_{filename}_highres.png generated.")
+        print(f"   Ultra-res fig_{filename}_highres.png generated in figures/.")
         await browser.close()
     
     os.remove(html_path)
