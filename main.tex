@@ -129,7 +129,7 @@ The fundamental separation between these local and remote computational workload
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=0.75\textwidth]{fig_arch_highres.png}
+\includegraphics[width=\textwidth]{fig_arch_highres.png}
 \caption{Hybrid Client-Centric System Architecture}
 \label{fig:arch}
 \end{figure}
@@ -152,25 +152,14 @@ The core of the Bidayuh Jagoy Translator's efficacy lies in its Multi-Staged Con
 \label{sec:context_composition}
 Before formal retrieval, a \textbf{Preliminary Step (Keyword Extraction)} identifies semantic anchors (e.g., ``water'', ``flows'') within the user query. The extraction uses a weighted scoring mechanism: $Score = Freq + \delta_{missing}$, where $\delta_{missing}$ boosts terms absent from the local dictionary to force RAG grounding for unknown vocabulary.
 
-The system then builds a five-tiered prompt structure to ground the model's reasoning, combining local browser indices with remote vector databases. We depict this using the project's core dataset, specifically the imperative phrase: \textit{``Tell these stones to become bread.''} (illustrated in Figure \ref{fig:main_ui} and \ref{fig:analysis}):
-
-\begin{enumerate}
-    \item \textbf{Context A - Local Glossary Lookups (Lexical Anchor)}: Executes direct queries against a local JSON dictionary. For our example, it maps \textit{stone} $\rightarrow$ \textit{batuh}. This provides 1:1 lexical grounding, preventing ``lexical drift'' where the LLM might hallucinate standard Malay (\textit{batu}).
-    \item \textbf{Context B - Hybrid Vector-Keyword Retrieval (Structural Alignment)}: Queries the remote Supabase HNSW index \cite{supabase_hnsw} while simultaneously performing a local keyword search. It retrieves semantically similar sentence pairs (e.g., \textit{``picked up stones''}) to suggest proper SVO orientation.
-    \item \textbf{Context C - Client-side Neural Re-ranking}: Utilizes client-side embeddings via Transformers.js to re-rank the candidates directly in the browser. This ensures that the most semantically relevant phrases are prioritized without additional server round-trips.
-    \item \textbf{Context D - Grammatical Constitution}: Injects explicit grammatical rules (e.g., \textit{Rule 2: Plural by Reduplication}) as hard constraints. For our example, it enforces the pluralization of \textit{batuh} $\rightarrow$ \textit{batuh-batuh}.
-    \item \textbf{Context E - Synonym-based Semantic Bridges}: If a term is missing (e.g., \textit{become}), the system identifies a synonym (\textit{change} or \textit{happen}) via external APIs to bridge the lexical gap. Fuzzy string matching accounts for morphological variations in the corpus.
-\end{enumerate}
-
-This complete 5-stage sequential assembly pattern is visually structured in Figure \ref{fig:pipeline}. To support linguistic auditing, authorized evaluators can expand a \textbf{``Full Prompt (Debug)''} section in the UI to view the exact retrieved contexts from A-E sent to Gemini.
-
-\begin{figure}[!ht]
+\begin{figure}[!h]
 \centering
-\includegraphics[width=1.0\textwidth]{fig_pipeline_highres.png}
+\includegraphics[width=0.9\textwidth]{fig_pipeline_highres.png}
 \caption{The 5-Stage Context Assembly Pipeline.}
 \label{fig:pipeline}
 \end{figure}
 
+The system then builds a five-tiered prompt structure to ground the model's reasoning, combining local browser indices with remote vector databases. We depict this using the project's core dataset, specifically the imperative phrase: \textit{``Tell these stones to become bread.''} (illustrated in Figure \ref{fig:main_ui} and \ref{fig:analysis}):
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=0.85\textwidth]{fig_main_v4.png}
@@ -184,6 +173,19 @@ This complete 5-stage sequential assembly pattern is visually structured in Figu
 \caption{Translation Analysis Trace}
 \label{fig:analysis}
 \end{figure}
+
+\begin{enumerate}
+    \item \textbf{Context A - Local Glossary Lookups (Lexical Anchor)}: Executes direct queries against a local JSON dictionary. For our example, it maps \textit{stone} $\rightarrow$ \textit{batuh}. This provides 1:1 lexical grounding, preventing ``lexical drift'' where the LLM might hallucinate standard Malay (\textit{batu}).
+    \item \textbf{Context B - Hybrid Vector-Keyword Retrieval (Structural Alignment)}: Queries the remote Supabase HNSW index \cite{supabase_hnsw} while simultaneously performing a local keyword search. It retrieves semantically similar sentence pairs (e.g., \textit{``picked up stones''}) to suggest proper SVO orientation.
+    \item \textbf{Context C - Client-side Neural Re-ranking}: Utilizes client-side embeddings via Transformers.js to re-rank the candidates directly in the browser. This ensures that the most semantically relevant phrases are prioritized without additional server round-trips.
+    \item \textbf{Context D - Grammatical Constitution}: Injects explicit grammatical rules (e.g., \textit{Rule 2: Plural by Reduplication}) as hard constraints. For our example, it enforces the pluralization of \textit{batuh} $\rightarrow$ \textit{batuh-batuh}.
+    \item \textbf{Context E - Synonym-based Semantic Bridges}: If a term is missing (e.g., \textit{become}), the system identifies a synonym (\textit{change} or \textit{happen}) via external APIs to bridge the lexical gap. Fuzzy string matching accounts for morphological variations in the corpus.
+\end{enumerate}
+
+This complete 5-stage sequential assembly pattern is visually structured in Figure \ref{fig:pipeline}. To support linguistic auditing, authorized evaluators can expand a \textbf{``Full Prompt (Debug)''} section in the UI to view the exact retrieved contexts from A-E sent to Gemini.
+
+
+
 
 \subsection{Client-Side Re-ranking Algorithm}
 A key novelty is the semantic filtering performed directly in the browser to select the most relevant ``Context C'' examples. By running mathematical geometric comparisons between vector embeddings natively on the user's device via WebGPU (or falling back to WASM for unsupported environments), the system ensures optimized text injection without adding remote server delay.

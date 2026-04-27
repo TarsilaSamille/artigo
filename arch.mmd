@@ -1,30 +1,35 @@
-flowchart TB
+flowchart LR
     %% Global Styling
     accTitle: System Architecture
     accDescr: Hybrid Client-Centric RAG Architecture
-%%{init: {'themeVariables': { 'fontSize': '30px' }}}%%
+%%{init: {'themeVariables': { 'fontSize': '50px' }}}%%
 
     subgraph Client [" "]
-        direction LR
-     
+         direction RL
         Title1["`**User Browser  (Client-Side)**`"]:::header
 
-        UI["UI<br/>(Vanilla JS)"]
-        TJS["Transformers.js<br/>(ONNX Runtime)"]
-        Cache["Local Cache<br/>(Glossary/Corpus)"]
-        HW["WebGPU / WASM<br/>Acceleration"]
+        subgraph Cliente [" "]
 
-        UI <--> TJS
-        TJS -.-> Cache
-        TJS <--> HW
-        UI <--> Cache
+            direction TB
+
+            UI["UI<br/>(Vanilla JS)"]
+            TJS["Transformers.js<br/>(ONNX Runtime)"]
+            Cache["Local Cache<br/>(Glossary/Corpus)"]
+            HW["WebGPU / WASM<br/>Acceleration"]
+            
+            UI <--> TJS
+            TJS -.-> Cache
+            TJS <--> HW
+            UI <--> Cache
+        end
+
     end
 
     subgraph Server [" "]
-        direction TB
+        direction TB 
         API["FastAPI Backend<br/>(Vercel)"]
         DB[("Supabase<br/>(pgvector/HNSW)")]
-        LLM(("Google Gemini<br/>2.5 Flash"))
+        LLM(("LLM Model"))
         Title["`**Cloud Infrastructure (Serverless)**`"]:::header 
 
     end
@@ -35,12 +40,13 @@ flowchart TB
     API <-->|Context<br/>Orchestration| LLM
     
     %% Styles
-    classDef default font-size:32px,fill:#ffffff,stroke:#000F,stroke-width:3px;
+    classDef default font-size:50px,fill:#ffffff,stroke:#000F,stroke-width:3px;
     linkStyle default stroke:#000F,stroke-width:3px;
-    
+    style Cliente fill:none,stroke:none
+
     style Client fill:none,stroke:#000F,stroke-width:4px,stroke-dasharray: 8 8
     style Server fill:none,stroke:#000F,stroke-width:4px,stroke-dasharray: 8 8
     style LLM fill:none,stroke:#000F,stroke-width:5px
     style DB fill:none,stroke:#000F,stroke-width:4px
     style HW fill:none,stroke:#000F,stroke-width:3px
-    classDef header fill:none,color:#000F,stroke:none,font-size:32px
+    classDef header fill:none,color:#000F,stroke:none,font-size:52px

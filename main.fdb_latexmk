@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1777297123.26288 "main.aux" "main.bbl" "main" 1777297125.73055 0
+["bibtex main"] 1777301870.94492 "main.aux" "main.bbl" "main" 1777301873.1555 0
   "./references.bib" 1777179663.39193 7539 ba49387e59cffaa90d6a824fd628e264 ""
   "./sbc.bst" 1776991676.54921 22370 b7580b5ffc692f96d81a2b185ee01582 ""
-  "main.aux" 1777297125.07872 6022 baae602050fe8d126ca9747c7275a920 "pdflatex"
+  "main.aux" 1777301872.56364 5399 d9c199d6f6d8865ad930bb073794c54d "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1777297123.56083 "main.tex" "main.pdf" "main" 1777297125.73087 0
+["pdflatex"] 1777301871.17825 "main.tex" "main.pdf" "main" 1777301873.15583 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -160,13 +160,13 @@
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
   "caption2.sty" 1766181038 15189 50845fba222dc25666abc3397b231fab ""
   "fig_analysis_v4.png" 1776472153.87814 150689 eb2b816cea8676b417cc228edfc10a4a ""
-  "fig_arch_highres.png" 1776984642.08993 131242 1b2daa832d60caa304cdd7c3a1d35fd6 ""
+  "fig_arch_highres.png" 1777301455.53691 63543 9e7cf10fb30e2b2354b1c198bc4749da ""
   "fig_main_v4.png" 1776472150.60647 92046 445e7281c326e231ef7b9c9b5ef276e6 ""
-  "fig_pipeline_highres.png" 1776984643.74853 108915 8a1056420c34d72f61f4086c06f0437a ""
-  "main.aux" 1777297125.07872 6022 baae602050fe8d126ca9747c7275a920 "pdflatex"
-  "main.bbl" 1777297123.55154 5779 41942fa4f08e735b0edcd634aa2f46de "bibtex main"
-  "main.out" 1777297125.07989 4012 50293329b07020b16e67c01013c5fd89 "pdflatex"
-  "main.tex" 1777297099.82683 33399 b77aaceb42e33d8e69f22832ee33225a ""
+  "fig_pipeline_highres.png" 1777301457.40877 108915 8a1056420c34d72f61f4086c06f0437a ""
+  "main.aux" 1777301872.56364 5399 d9c199d6f6d8865ad930bb073794c54d "pdflatex"
+  "main.bbl" 1777301871.17198 5779 41942fa4f08e735b0edcd634aa2f46de "bibtex main"
+  "main.out" 1777301872.56465 3679 6f22360fefa9f62d9c98401ac7f4cb0a "pdflatex"
+  "main.tex" 1777301864.27623 32356 2f189132da452ab0c625787a6944ccc4 ""
   "sbc-template.sty" 1776804846.97197 5281 f60233dbabaac345ab9dfcfe5d9e298f ""
   (generated)
   "main.aux"
