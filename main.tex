@@ -92,11 +92,11 @@
 
 \section{Introduction}
 
-The rapid advancement of Natural Language Processing (NLP), driven by the Transformer architecture~\cite{vaswani2017attention}, has paradoxically widened the gap between global ``high-resource'' and ``low-resource'' languages~\cite{nekoto2020participatory}. Foundational models such as GPT-4 and Gemini are predominantly trained on web-scraped datasets, where English, Mandarin, Spanish, and standard Malay account for the vast majority of linguistic tokens~\cite{nllb2022no}.
+The rapid progress in Natural Language Processing (NLP), driven by the Transformer architecture~\cite{vaswani2017attention}, has disproportionately benefited global ``high-resource'' languages, leaving ``low-resource'' languages further behind~\cite{nekoto2020participatory}. Foundational models such as GPT-4 and Gemini are predominantly trained on web-scraped datasets, where English, Mandarin, Spanish, and standard Malay account for the vast majority of linguistic tokens~\cite{nllb2022no}.
 
-This systemic resource disparity is starkly evident in the case of Bidayuh Jagoy (also referred to under the broader ethno-linguistic cluster of Land Dayak), a distinct dialect spoken primarily in the West Kalimantan region of Indonesia and parts of Sarawak, Malaysia. It possesses a vibrant oral tradition but a small digital footprint. Its presence is confined to scattered PDFs, academic papers from institutions like Universiti Malaysia Sarawak (UNIMAS), and community blogs~\cite{unimas_repo}. Consequently, when standard LLMs attempt to process Bidayuh Jagoy, they exhibit catastrophic failure modes such as hallucination, code-switching to standard Malay, and grammatical drift~\cite{scispace_intensifiers}.
+This resource disparity is especially problematic for Bidayuh Jagoy (also referred to under the broader ethno-linguistic cluster of Land Dayak), a distinct dialect spoken primarily in the West Kalimantan region of Indonesia and parts of Sarawak, Malaysia. While spoken widely in the community, it has a very limited digital footprint. Its presence is confined to scattered PDFs, academic papers from institutions like Universiti Malaysia Sarawak (UNIMAS), and community blogs~\cite{unimas_repo}. Consequently, when standard LLMs attempt to process Bidayuh Jagoy, they frequently fail, producing hallucinations, code-switching to standard Malay, and grammatical errors~\cite{scispace_intensifiers}.
 
-Retrieval-Augmented Generation (RAG)~\cite{intersystems_rag} offers a superior paradigm for this use case. This architecture distinguishes between two types of knowledge: \textbf{Implicit Memory}, which is baked into the model's internal parameters during pre-training but often contains hallucinations for low-resource data, and \textbf{Explicit Memory}, which consists of external context information provided to the model at runtime. The Bidayuh Jagoy Translator uses RAG to bypass the limits of implicit memory, assembling a structured bunch of helper information (vocabulary, sentence patterns, and grammar rules) to instruct the Google Gemini model from scratch for each query.
+Retrieval-Augmented Generation (RAG)~\cite{intersystems_rag} offers a practical alternative for this scenario. This architecture distinguishes between two types of knowledge: \textbf{Implicit Memory}, which is baked into the model's internal parameters during pre-training but often contains hallucinations for low-resource data, and \textbf{Explicit Memory}, which consists of external context information provided to the model at runtime. The Bidayuh Jagoy Translator uses RAG to bypass the limits of implicit memory, assembling a structured bunch of helper information (vocabulary, sentence patterns, and grammar rules) to instruct the Google Gemini model from scratch for each query.
 
 Unlike server-centric approaches such as \textit{Masakhane}~\cite{nekoto2020participatory} and Meta's NLLB~\cite{nllb2022no}, the Bidayuh Jagoy Translator employs a Hybrid Client-Centric architecture that prioritizes cost efficiency and latency reduction. While our case study focuses on Bidayuh Jagoy, the proposed RAG framework is \textbf{generalizable} to any low-resource language context --- including regional dialects, creoles, and endangered languages globally.
 
@@ -119,7 +119,7 @@ The system utilizes a modern serverless stack with key components including:
  
 \subsection{System Architecture}
 
-The fundamental separation between local and remote computational workloads is mapped in Figure \ref{fig:arch}. This \textbf{Hybrid Decentralization} strategy splits the RAG pipeline into two distinct security and compute zones:
+The fundamental separation between local and remote computational workloads is mapped in Figure \ref{fig:arch}. This hybrid decentralization strategy splits the RAG pipeline into two distinct security and compute zones:
 \begin{itemize}
     \item \textbf{The Client Layer}: Represents the user's browser, which securely manages the sensitive AI logic, local glossary state, and the generation of local embeddings for re-ranking. This ensures that user queries remain private and avoids the latency of multiple server-side embedding calls.
     \item \textbf{The Cloud Infrastructure}: A serverless subgraph (Vercel + Supabase) that handles the persistence and high-recall retrieval of the global parallel corpus via \textbf{Supabase pgvector}. This remote vector store enables the application to perform high-recall searches against the central repository without requiring users to download the entire sentence dataset upon initialization.
@@ -135,12 +135,12 @@ The fundamental separation between local and remote computational workloads is m
 \subsection{The ``Fat Client'' Philosophy} \label{sec:fat_client}
 Using Transformers.js, the browser downloads a \textbf{small 4-bit compressed model} (\texttt{Xenova/all-MiniLM-L6-v2}) and runs it natively via the ONNX Runtime. This smaller footprint allows for privacy-preserving local text comparison and significantly reduced server costs by performing semantic re-ranking without remote interference.
 
-A critical advantage of this hybrid architecture is its economic sustainability. The system performs high-recall searches against a remote \textbf{Supabase} database using the HNSW (Hierarchical Navigable Small World) index \cite{hnsw_paper} for efficient vector retrieval. By offloading embedding generation and re-ranking to the user's device, the application operates entirely within the free-tier infrastructure limits (zero monthly cloud costs) of platforms such as Supabase and Vercel \cite{vercel_platform}. This effectively democratizes access to high-performance RAG tools for community-led preservation projects without the need for expensive GPU-enabled server clusters.
+A critical advantage of this hybrid architecture is its economic sustainability. The system performs high-recall searches against a remote \textbf{Supabase} database using the HNSW (Hierarchical Navigable Small World) index \cite{hnsw_paper} for efficient vector retrieval. By offloading embedding generation and re-ranking to the user's device, the application operates entirely within the free-tier infrastructure limits (zero monthly cloud costs) of platforms such as Supabase and Vercel \cite{vercel_platform}. This makes high-performance RAG tools accessible for community-led preservation projects without the need for expensive GPU-enabled server clusters.
 
 
 \section{Context Assembly and Prompt Engineering}
 
-The core of the Bidayuh Jagoy Translator's efficacy lies in its Multi-Staged Context Assembly pipeline.
+The Bidayuh Jagoy Translator relies on a multi-stage context assembly pipeline.
  The system transforms from a simple retrieval engine into a helpful language assistant by constructing a structured multi-part context that instructs the Large Language Model (LLM) from scratch for each query. 
  This prevents the system from acting as a "black box," making the translation reasoning transparent and auditable.
 
@@ -165,11 +165,11 @@ The system then builds a five-tiered prompt structure to ground the model's reas
 \end{figure}
 
 \begin{enumerate}
-    \item \textbf{Context A - Local Glossary Lookups (Lexical Anchor)}: Executes direct queries against a local JSON dictionary. For our example, it maps \textit{stone} $\rightarrow$ \textit{batuh}. This provides 1:1 lexical grounding, preventing ``lexical drift'' where the LLM might hallucinate standard Malay (\textit{batu}).
-    \item \textbf{Context B - Hybrid Vector-Keyword Retrieval (Structural Alignment)}: Queries the remote Supabase HNSW index \cite{supabase_hnsw} while simultaneously performing a local keyword search. It retrieves semantically similar sentence pairs (e.g., \textit{``picked up stones''}) to suggest proper SVO orientation.
-    \item \textbf{Context C - Client-side Neural Re-ranking}: Utilizes client-side embeddings via Transformers.js to re-rank the candidates directly in the browser. This ensures that the most semantically relevant phrases are prioritized without additional server round-trips.
-    \item \textbf{Context D - Grammatical Constitution}: Injects explicit grammatical rules (e.g., \textit{Rule 2: Plural by Reduplication}) as hard constraints. For our example, it enforces the pluralization of \textit{batuh} $\rightarrow$ \textit{batuh-batuh}.
-    \item \textbf{Context E - Synonym-based Semantic Bridges}: If a term is missing (e.g., \textit{become}), the system identifies a synonym (\textit{change} or \textit{happen}) via external APIs to bridge the lexical gap. Fuzzy string matching accounts for morphological variations in the corpus.
+    \item Context A (Local Glossary Lookups): Executes direct queries against a local JSON dictionary. For our example, it maps \textit{stone} $\rightarrow$ \textit{batuh}. This provides 1:1 lexical grounding, preventing ``lexical drift'' where the LLM might hallucinate standard Malay (\textit{batu}).
+    \item Context B (Hybrid Vector-Keyword Retrieval): Queries the remote Supabase HNSW index \cite{supabase_hnsw} while simultaneously performing a local keyword search. It retrieves semantically similar sentence pairs (e.g., \textit{``picked up stones''}) to suggest proper SVO orientation.
+    \item Context C (Client-side Neural Re-ranking): Utilizes client-side embeddings via Transformers.js to re-rank the candidates directly in the browser. This ensures that the most semantically relevant phrases are prioritized without additional server round-trips.
+    \item Context D (Grammatical Constitution): Injects explicit grammatical rules (e.g., \textit{Rule 2: Plural by Reduplication}) as hard constraints. For our example, it enforces the pluralization of \textit{batuh} $\rightarrow$ \textit{batuh-batuh}.
+    \item Context E (Synonym-based Semantic Bridges): If a term is missing (e.g., \textit{become}), the system identifies a synonym (\textit{change} or \textit{happen}) via external APIs to bridge the lexical gap. Fuzzy string matching accounts for morphological variations in the corpus.
 \end{enumerate}
 
 This complete 5-stage sequential assembly pattern is visually structured in Figure \ref{fig:pipeline}. To support linguistic auditing, authorized evaluators can expand a \textbf{``Full Prompt (Debug)''} section in the UI to view the exact retrieved contexts from A-E sent to Gemini.
@@ -236,11 +236,11 @@ The system's knowledge base relies on a curated parallel corpus derived from New
 
 \begin{enumerate}
     \item \textbf{Alignment Algorithms}: We utilized \textbf{IBM Model 2} \cite{brown1993mathematics}. While neural aligners require massive data, Model 2 is uniquely robust for small corpora ($\sim$2,000--5,000 pairs). It treats word alignment as a \textbf{latent variable problem}---where the hidden mapping between words is discovered via EM iterations. To handle structural differences, it implements a \textbf{distortion model} based on absolute word positions, preventing the random mapping drift common in Model 1. 
-    \item \textbf{Heuristic Refinement}: We implemented \textbf{Symmetric Alignment Checking}, retaining only bidirectional hits.
+    \item \textbf{Heuristic Refinement}: We implemented symmetric alignment checking, retaining only bidirectional hits.
     \item \textbf{Filtering}: Final production comprises 4,487 sentence pairs and 2,455 dictionary entries.
 \end{enumerate}
 
-Furthermore, 15 core grammatical rules were extracted through an iterative \textbf{Zero-Shot prompting} process on Google Gemini. These are exposed transparently in the system's \textbf{Grammar Module}, which provides concrete examples for community vetting:
+Furthermore, 15 core grammatical rules were extracted through an iterative zero-shot prompting process on Google Gemini. These are exposed transparently in the system's grammar module, which provides concrete examples for community vetting:
 \begin{itemize}
     \item \textbf{Rule 1: Past Tense Marker `mo '`}: The particle `mo '` is consistently placed before the main verb to indicate a completed action (e.g., ``Jesus answered him...'' $\rightarrow$ ``Yesus mo' nyawot-e...'').
     \item \textbf{Rule 2: Plural by Reduplication}: Nouns are often made plural by repeating the word, seen in examples like ``disciples'' ($\rightarrow$ ``pinuna ' -pinuna '-E'').
@@ -303,7 +303,7 @@ A critical challenge in low-resource translation is the \textbf{Domain Shift} be
 The local glossary is iteratively updated by native speakers to include contemporary terms (e.g., "internet", "car") that are absent from the religious text. Furthermore, the synonym bridging mechanism allows the system to pivot from an unknown modern term to a semantically similar anchor already present in the corpus, ensuring that the model maintains the correct Bidayuh Jagoy grammatical framework even when processing out-of-domain vocabulary.
 
 \subsection{Error Analysis and Fallback Mechanisms}
-Crucial to the scientific evaluation of the Bidayuh Jagoy Translator is the analysis of its failure modes. In cases where the RAG context fails to provide a specific Bidayuh Jagoy term (out-of-vocabulary), the system implements a \textbf{Graceful Degradation Strategy} via an Indonesian pivot. Specifically, the system prompt explicitly instructs Gemini 2.5 Flash to automatically translate missing terms into standard Indonesian (the regional lingua franca) instead of hallucinating Bidayuh-sounding morphology, explicitly flagging the insertion.
+Evaluating the Bidayuh Jagoy Translator requires a careful analysis of its failure modes. In cases where the RAG context fails to provide a specific Bidayuh Jagoy term (out-of-vocabulary), the system implements a graceful degradation strategy via an Indonesian pivot. Specifically, the system prompt explicitly instructs Gemini 2.5 Flash to automatically translate missing terms into standard Indonesian (the regional lingua franca) instead of hallucinating Bidayuh-sounding morphology, explicitly flagging the insertion.
 
 \begin{itemize}[leftmargin=10pt]
     \item \textbf{Example Failure}:
@@ -318,7 +318,7 @@ This explicit signaling of uncertainty is a key strength. It prevents the propag
 
 \section{Conclusion}
 
-The Bidayuh Jagoy Translator represents a synthesis of advanced neural search and traditional rule-based linguistics. By leveraging Transformers.js, the system democratizes access to advanced RAG tools for endangered language preservation, decoupling it from expensive server-side GPU clusters. 
+The Bidayuh Jagoy Translator combines neural search with traditional rule-based linguistics. By leveraging Transformers.js, the system makes advanced RAG tools accessible for endangered language preservation, decoupling it from expensive server-side GPU clusters.
 
 Importantly, while demonstrated through Bidayuh Jagoy, this hybrid client-centric RAG architecture is \textbf{applicable to any low-resource language scenario} --- including regional dialects (e.g., Venetian, Sicilian), creoles (e.g., Tok Pisin), minority languages (e.g., Sorbian, Romansh), and any language on the UNESCO Red List \cite{unesco2010atlas}. The minimal requirements are: (1) a small parallel corpus ($\sim$2,000+ sentence pairs), (2) community involvement for validation, and (3) willingness to operate within a browser-based deployment model.
 
