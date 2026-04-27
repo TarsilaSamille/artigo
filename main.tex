@@ -107,13 +107,14 @@ Digital preservation of low-resource languages has gained traction with initiati
 In contrast, our work focuses on the benefits of RAG for domain-constrained translation, demonstrating that effective linguistic grounding can be achieved by offloading to the browser context preparation. This aligns with the emerging trend of \textbf{On-Device Intelligence} and \textbf{Edge-AI}~\cite{gitnation}, where the execution of neural models is moved to the client side using frameworks like ONNX Runtime and Transformers.js. By performing some tasks natively, we significantly reduce the dependency on massive server-side clusters for community-led projects.
 
 \subsection{The Stack Overview}
-The system utilizes a modern serverless stack:
+The system utilizes a modern serverless stack with key components including:
 \begin{itemize}
     \item \textbf{Frontend}: Vanilla JavaScript + HTML5.
     \item \textbf{Client-Side AI}: \textbf{Transformers.js} (\texttt{@xenova/transformers}), an open-source library that enables the execution of state-of-the-art machine learning models directly in the web browser. Developed by Hugging Face, it acts as the primary orchestrator, leveraging WebGPU and WebAssembly (WASM) to offload the complex task of context orchestration and embedding generation directly to the client's hardware \cite{transformersjs}.
     \item \textbf{Backend}: FastAPI (Python) on Vercel Serverless Functions, which provide stateless, auto-scaling API execution \cite{vercel_platform}.
-    \item \textbf{AI Engine}: Google Gemini 2.5 Flash \cite{gemini_release}.
-    \item \textbf{Database}: Supabase (PostgreSQL), used as a Backend-as-a-Service, with the open-source \texttt{pgvector} extension\footnote{pgvector (Open-source vector similarity search for Postgres): \url{https://github.com/pgvector/pgvector}} for high-performance vector operations.
+    \item \textbf{AI Engine}: Google Gemini 2.5 Flash with 1M token context for RAG synthesis \cite{gemini_release}.
+    \item \textbf{Database}: Supabase (PostgreSQL), used as a Backend-as-a-Service, with the open-source \texttt{pgvector} extension using HNSW and cosine similarity for global retrieval \cite{supabase_hnsw}.
+    \item \textbf{Local Inference}: all-MiniLM-L6-v2 (384-dimensional embeddings) running on WebGPU for client-side RAG.
 \end{itemize}
  
 \subsection{System Health and Monitoring}
@@ -136,7 +137,7 @@ The fundamental separation between these local and remote computational workload
 \subsection{The ``Fat Client'' Philosophy} \label{sec:fat_client}
 Using Transformers.js, the browser downloads a \textbf{small 4-bit compressed model} (\texttt{Xenova/all-MiniLM-L6-v2}) and runs it natively via the ONNX Runtime. This smaller footprint allows for privacy-preserving local text comparison and significantly reduced server costs by performing semantic re-ranking without remote interference.
 
-The performance metrics listed were benchmarked on a standard consumer laptop (MacBook Pro, 2.6 GHz 6-Core Intel Core i7). Recognizing that indigenous communities frequently rely on mobile devices, the system is designed with an automatic execution fallback. If the client browser lacks WebGPU support (e.g., iOS Safari), Transformers.js seamlessly degrades to WebAssembly (WASM). While WASM inference introduces a slight latency increase, it guarantees ubiquitous accessibility across all devices without requiring hardware-specific backend configurations. 
+The system supports multiple execution modes for optimal performance: WebGPU (primary) with an initial load of $\sim$23MB (cached), inference time of 15--45 ms, and low memory impact (GPU-bound); WASM (fallback) with the same initial load, inference of 120--350 ms, and moderate CPU memory impact; and remote-only RAG with no initial load but 800+ ms inference including round-trip time and server-dependent memory. These metrics were benchmarked on a standard consumer laptop (MacBook Pro, 2.6 GHz 6-Core Intel Core i7). Recognizing that indigenous communities frequently rely on mobile devices, the system is designed with an automatic execution fallback. If the client browser lacks WebGPU support (e.g., iOS Safari), Transformers.js seamlessly degrades to WebAssembly (WASM). While WASM inference introduces a slight latency increase, it guarantees ubiquitous accessibility across all devices without requiring hardware-specific backend configurations. 
 
 A critical advantage of this hybrid architecture is its economic sustainability. The system performs high-recall searches against a remote \textbf{Supabase} database using the HNSW (Hierarchical Navigable Small World) index \cite{hnsw_paper} for efficient vector retrieval. By offloading embedding generation and re-ranking to the user's device, the application operates entirely within the free-tier infrastructure limits (zero monthly cloud costs) of platforms such as Supabase and Vercel \cite{vercel_platform}. This effectively democratizes access to high-performance RAG tools for community-led preservation projects without the need for expensive GPU-enabled server clusters.
 
@@ -308,44 +309,6 @@ Crucial to the scientific evaluation of the Bidayuh Jagoy Translator is the anal
 \end{itemize}
 
 This explicit signaling of uncertainty is a key strength. It prevents the propagation of ``silent errors'' and directly informs the community-driven correction loop. Native speakers can quickly identify these flags in the translation logs and provide the correct Bidayuh term, which is then used to update the central glossary, closing the RAG knowledge gap for future users.
-
-\subsection{System Specifications and Performance Benchmarks}
-
-Table~\ref{tab:specs} summarises the key components, technologies, and their roles within the Bidayuh Jagoy Translator system, while Table~\ref{tab:latency} provides benchmark metrics for the client-side execution modes.
-
-\begin{table}[!ht]
-\centering
-\caption{Key System Specifications of the Bidayuh Jagoy Translator.}
-\label{tab:specs}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{L{2.5cm} L{3.5cm} L{3.0cm} L{2.7cm}}
-\toprule
-\textbf{Component} & \textbf{Technology} & \textbf{Specification} & \textbf{Purpose} \\[2pt]
-\midrule
-AI Orchestrator & Gemini 2.5 Flash & 1M Token Context & RAG Synthesis \\
-Prompt Strategy & Chain-of-Thought & 5-Tiered Context & Linguistic Grounding \\
-Local Inference & all-MiniLM-L6-v2 & 384-dim, WebGPU & Client-side RAG \\
-Vector Store & Supabase/pgvector & HNSW, Cosine & Global Retrieval \\
-Linguistic Reference & Bidayuh Jagoy & SVO Grammar & Target Language \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\caption{"Fat Client" Performance Metrics}
-\label{tab:latency}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{L{3.5cm} L{2.5cm} L{2.5cm} L{3.0cm}}
-\toprule
-\textbf{Execution Mode} & \textbf{Initial Load} & \textbf{Inference (ms)} & \textbf{Memory Impact} \\
-\midrule
-WebGPU (Primary) & $\sim$23MB (cached) & 15--45 ms & Low (GPU-bound) \\
-WASM (Fallback) & $\sim$23MB (cached) & 120--350 ms & Moderate (CPU) \\
-Remote-only RAG & N/A & 800+ ms (RTT) & Server-dependent \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \section{Conclusion}
 
