@@ -122,8 +122,8 @@ The system utilizes a modern serverless stack with key components including:
 
 The fundamental separation between local and remote computational workloads is mapped in Figure \ref{fig:arch}. This hybrid decentralization strategy splits the RAG pipeline into two distinct security and compute zones:
 \begin{itemize}
-    \item \textbf{The Client Layer}: Represents the user's browser, which securely manages the sensitive AI logic, local glossary state, and the generation of local embeddings for re-ranking. This ensures that user queries remain private and avoids the latency of multiple server-side embedding calls.
-    \item \textbf{The Cloud Infrastructure}: A serverless subgraph (Vercel + Supabase) that handles the persistence and high-recall retrieval of the global parallel corpus via \textbf{Supabase pgvector}. This remote vector store enables the application to perform high-recall searches against the central repository without requiring users to download the entire sentence dataset upon initialization.
+    \item The client layer runs directly in the user's browser, securely managing the AI logic, local glossary state, and generating embeddings for re-ranking. Keeping these operations local ensures that user queries remain private and eliminates the latency of remote embedding calls.
+    \item The cloud infrastructure consists of a serverless backend (Vercel and Supabase) that persists the global parallel corpus and handles high-recall retrieval using pgvector. This allows the application to search the central repository efficiently without forcing users to download the entire dataset.
 \end{itemize}
 
 \begin{figure}[H]
@@ -147,10 +147,8 @@ The Bidayuh Jagoy Translator relies on a multi-stage context assembly pipeline.
 
 \subsection{The Hybrid Retrieval Pipeline and Context Composition}
 \label{sec:context_composition}
-Before formal retrieval, a \textbf{Preliminary Step (Keyword Extraction)} identifies semantic anchors (e.g., ``water'', ``flows'') within the user query. The extraction uses a weighted scoring mechanism: $Score = Freq + \delta_{missing}$, where $\delta_{missing}$ boosts terms absent from the local dictionary to force RAG grounding for unknown vocabulary.
 
-
-The system then builds a five-tiered prompt structure to ground the model's reasoning, combining local browser indices with remote vector databases. We depict this using the project's core dataset, specifically the imperative phrase: \textit{``Tell these stones to become bread.''} (illustrated in Figure \ref{fig:main_ui} and \ref{fig:analysis}):
+The system builds a five-tiered prompt structure to ground the model's reasoning, combining local browser indices with remote vector databases. We depict this using the project's core dataset, specifically the imperative phrase: \textit{``Tell these stones to become bread.''} (illustrated in Figure \ref{fig:main_ui} and \ref{fig:analysis}):
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{UI.png}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.17)  27 APR 2026 17:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.17)  28 APR 2026 17:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -652,10 +652,10 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 
 [2]
-<fig_arch_highres.png, id=111, 900.36375pt x 370.38374pt>
-File: fig_arch_highres.png Graphic file (type png)
-<use fig_arch_highres.png>
-Package pdftex.def Info: fig_arch_highres.png  used on input line 131.
+<figures/fig_arch_highres.png, id=111, 900.36375pt x 370.38374pt>
+File: figures/fig_arch_highres.png Graphic file (type png)
+<use figures/fig_arch_highres.png>
+Package pdftex.def Info: figures/fig_arch_highres.png  used on input line 131.
 (pdftex.def)             Requested size: 426.79135pt x 175.57239pt.
 LaTeX Font Info:    Trying to load font information for OT1+phv on input line 1
 32.
@@ -668,65 +668,66 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 
 
-[3 <./fig_arch_highres.png>]
-<UI.png, id=130, 1766.6pt x 956.57375pt>
-File: UI.png Graphic file (type png)
-<use UI.png>
-Package pdftex.def Info: UI.png  used on input line 156.
+[3 <./figures/fig_arch_highres.png>]
+<figures/UI.png, id=130, 1766.6pt x 956.57375pt>
+File: figures/UI.png Graphic file (type png)
+<use figures/UI.png>
+Package pdftex.def Info: figures/UI.png  used on input line 154.
 (pdftex.def)             Requested size: 362.77525pt x 196.4346pt.
-<analysis.png, id=131, 1152.305pt x 893.3375pt>
-File: analysis.png Graphic file (type png)
-<use analysis.png>
-Package pdftex.def Info: analysis.png  used on input line 163.
+<figures/analysis.png, id=131, 1152.305pt x 893.3375pt>
+File: figures/analysis.png Graphic file (type png)
+<use figures/analysis.png>
+Package pdftex.def Info: figures/analysis.png  used on input line 161.
 (pdftex.def)             Requested size: 362.77525pt x 281.23923pt.
 
 
-[4 <./UI.png>]
-<fig_pipeline_highres.png, id=146, 900.36375pt x 840.13875pt>
-File: fig_pipeline_highres.png Graphic file (type png)
-<use fig_pipeline_highres.png>
-Package pdftex.def Info: fig_pipeline_highres.png  used on input line 181.
+[4 <./figures/UI.png>]
+<figures/fig_pipeline_highres.png, id=143, 900.36375pt x 840.13875pt>
+File: figures/fig_pipeline_highres.png Graphic file (type png)
+<use figures/fig_pipeline_highres.png>
+Package pdftex.def Info: figures/fig_pipeline_highres.png  used on input line 1
+79.
 (pdftex.def)             Requested size: 341.43437pt x 318.58943pt.
 
 
-[5 <./analysis.png>]
+[5 <./figures/analysis.png>]
 (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 190.
+nput line 188.
 
 
-[6 <./fig_pipeline_highres.png>]
+[6 <./figures/fig_pipeline_highres.png>]
 (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 2
-17.
+15.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 217.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 215.
 
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 253--254
+Underfull \hbox (badness 10000) in paragraph at lines 251--252
 []\OT1/ptm/m/n/12 (+20) To ex-e-cute the lo-cal re-ranking ef-fi-ciently, the e
 m-bed-ding model,
  []
 
-<history.png, id=214, 1848.9075pt x 946.53625pt>
-File: history.png Graphic file (type png)
-<use history.png>
-Package pdftex.def Info: history.png  used on input line 267.
+<figures/history.png, id=211, 1848.9075pt x 946.53625pt>
+File: figures/history.png Graphic file (type png)
+<use figures/history.png>
+Package pdftex.def Info: figures/history.png  used on input line 265.
 (pdftex.def)             Requested size: 426.79135pt x 218.49312pt.
 
 
 [8]
 
-[9 <./history.png>]
+[9 <./figures/history.png>]
 
 [10] (./main.bbl
 Underfull \hbox (badness 1365) in paragraph at lines 21--25
@@ -753,29 +754,26 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: F45C7A7C375D7ACE9F8C086553520184;3628.
  ) 
 Here is how much of TeX's memory you used:
- 17506 strings out of 473190
- 269191 string characters out of 5715799
+ 17504 strings out of 473190
+ 269575 string characters out of 5715799
  1051863 words of memory out of 5000000
- 40035 multiletter control sequences out of 15000+600000
- 604043 words of font info for 314 fonts, out of 8000000 for 9000
+ 40045 multiletter control sequences out of 15000+600000
+ 603491 words of font info for 306 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,8n,79p,1275b,1443s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
-></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><
-/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/
-local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
-ocal/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/tex
-live/2025/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/local/texlive/20
-25/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025/texm
-f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fon
-ts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/
-urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/
-utmri8a.pfb>
-Output written on main.pdf (13 pages, 579148 bytes).
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><
+/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
+usr/local/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/loca
+l/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/local/texli
+ve/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025
+/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dis
+t/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/t
+ype1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/t
+imes/utmri8a.pfb>
+Output written on main.pdf (13 pages, 550659 bytes).
 PDF statistics:
- 369 PDF objects out of 1000 (max. 8388607)
- 316 compressed objects within 4 object streams
+ 354 PDF objects out of 1000 (max. 8388607)
+ 307 compressed objects within 4 object streams
  102 named destinations out of 1000 (max. 500000)
  70298 words of extra memory for PDF output out of 74296 (max. 10000000)
 
