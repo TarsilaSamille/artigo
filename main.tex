@@ -164,14 +164,14 @@ The system builds a five-tiered prompt structure to ground the model's reasoning
 \end{figure}
 
 \begin{enumerate}
-    \item Context A (Local Glossary Lookups): Executes direct queries against a local JSON dictionary. For our example, it maps \textit{stone} $\rightarrow$ \textit{batuh}. This provides 1:1 lexical grounding, preventing ``lexical drift'' where the LLM might hallucinate standard Malay (\textit{batu}).
-    \item Context B (Hybrid Vector-Keyword Retrieval): Queries the remote Supabase HNSW index \cite{supabase_hnsw} while simultaneously performing a local keyword search. It retrieves semantically similar sentence pairs (e.g., \textit{``picked up stones''}) to suggest proper SVO orientation.
-    \item Context C (Client-side Neural Re-ranking): Utilizes client-side embeddings via Transformers.js to re-rank the candidates directly in the browser. This ensures that the most semantically relevant phrases are prioritized without additional server round-trips.
-    \item Context D (Grammatical Constitution): Injects explicit grammatical rules (e.g., \textit{Rule 2: Plural by Reduplication}) as hard constraints. For our example, it enforces the pluralization of \textit{batuh} $\rightarrow$ \textit{batuh-batuh}.
-    \item Context E (Synonym-based Semantic Bridges): If a term is missing (e.g., \textit{become}), the system identifies a synonym (\textit{change} or \textit{happen}) via external APIs to bridge the lexical gap. Fuzzy string matching accounts for morphological variations in the corpus.
+    \item \textbf{Context A (Local Glossary Lookups):} Executes direct queries against a local JSON dictionary. For our example, it maps \textit{stone} $\rightarrow$ \textit{batuh}. This provides 1:1 lexical grounding, preventing ``lexical drift'' where the LLM might hallucinate standard Malay (\textit{batu}).
+    \item \textbf{Context B (Hybrid Vector-Keyword Retrieval):} Queries the remote Supabase HNSW index \cite{supabase_hnsw} while simultaneously performing a local keyword search. It retrieves semantically similar sentence pairs (e.g., \textit{``picked up stones''}) to suggest proper SVO orientation.
+    \item \textbf{Context C (Client-side Neural Re-ranking):} Utilizes client-side embeddings via Transformers.js to re-rank the candidates directly in the browser. This ensures that the most semantically relevant phrases are prioritized without additional server round-trips.
+    \item \textbf{Context D (Grammatical Constitution):} Injects explicit grammatical rules (e.g., \textit{Rule 2: Plural by Reduplication}) as hard constraints. For our example, it enforces the pluralization of \textit{batuh} $\rightarrow$ \textit{batuh-batuh}.
+    \item \textbf{Context E (Synonym-based Semantic Bridges):} If a term is missing (e.g., \textit{become}), the system identifies a synonym (\textit{change} or \textit{happen}) via external APIs to bridge the lexical gap. Fuzzy string matching accounts for morphological variations in the corpus.
 \end{enumerate}
 
-This complete 5-stage sequential assembly pattern is visually structured in Figure \ref{fig:pipeline}. To support linguistic auditing, authorized evaluators can expand a \textbf{``Full Prompt (Debug)''} section in the UI to view the exact retrieved contexts from A-E sent to Gemini.
+This complete 5-stage sequential assembly pattern is visually structured in Figure \ref{fig:pipeline}. To support linguistic auditing, evaluators can expand a \textbf{``Full Prompt (Debug)''} section in the UI to view the exact retrieved contexts from A-E sent to Gemini.
 
 
 \begin{figure}[H]
@@ -200,16 +200,16 @@ def rank_candidates(query_vec, candidates):
 \end{lstlisting}
 
 \subsection{Structured ``Chain-of-Thought'' Prompting}
-Standard Foundation Models cannot translate Bidayuh Jagoy natively due to data scarcity. The system addresses this by forcing the LLM to follow an algorithmic ``Chain-of-Thought'' (CoT) \cite{wei2022chain}. The instructions strictly mandate a 3-step reasoning block based on the retrieved contexts:
+General-purpose foundation models cannot translate Bidayuh Jagoy natively due to data scarcity. The system addresses this by guiding the LLM to follow an algorithmic ``Chain-of-Thought'' (CoT) \cite{wei2022chain}. The instructions strictly mandate a 3-step reasoning block based on the retrieved contexts:
 \begin{enumerate}
     \item \textbf{Deconstruction}: Identifying the grammatical structure from Context D and B.
     \item \textbf{Mapping}: Selecting vocabulary from Context A and C, explicitly listing English-to-Bidayuh mappings.
     \item \textbf{Synthesis}: Assembling the final sentence.
 \end{enumerate}
 
-To handle this high-dimensional context, the system utilizes \textbf{Google Gemini 2.5 Flash}, selected for its 1-million-token window \cite{data_studios_gemini}. The feasibility of this structured synthesis is further detailed in Section \ref{sec:fat_client}, which discusses the local execution model. An explicit breakdown of this reasoning prompt is provided in Figure \ref{fig:analysis}.
+To handle this high-dimensional context, the system utilizes \textbf{Google Gemini 2.5 Flash}, selected for its 1-million-token window \cite{data_studios_gemini}. The feasibility of this structured synthesis is further detailed in Section \ref{sec:fat_client}, which discusses the local execution model. An explicit breakdown of this reasoning prompt is provided in listing \ref{lst:reasoning}.
 
-\begin{lstlisting}[language=Java, basicstyle=\footnotesize, frame=single, breaklines=true, caption={Reasoning Chain}]
+\begin{lstlisting}[language=Java, basicstyle=\footnotesize, frame=single, breaklines=true, caption={Reasoning Chain}, label={lst:reasoning}]
 ## 5. Output Format (Chain-of-Thought)
 Provide a JSON object with:
 1.  \`reasoning\`: 
@@ -253,7 +253,7 @@ To execute the local re-ranking efficiently, the embedding model, \texttt{all-Mi
 \section{Experimental Evaluation and Discussion}
 
 \subsection{Community-Driven Correction Loop}
-A robust evaluation of translation quality in low-resource settings requires native speaker validation. The Bidaio Jagoy Translator implements an integrated \textit{History and Correction Module}. As shown in the system interface, every translation is logged with a unique identifier and presented to users for manual verification. This mechanism allows the community to:
+A robust evaluation of translation quality in low-resource settings requires native speaker validation. The Bidaio Jagoy Translator implements an integrated \textit{History and Correction Module}. As shown in the system interface in image \ref{fig:history}, every translation is logged with a unique identifier and presented to users for manual verification. This mechanism allows the community to:
 \begin{itemize}
     \item \textbf{Validate}: Confirm the accuracy of AI-generated translations.
     \item \textbf{Correct}: Provide manual edits for "unedited" entries.
@@ -264,7 +264,7 @@ A robust evaluation of translation quality in low-resource settings requires nat
 \centering
 \includegraphics[width=1.0\textwidth]{history.png}
 \caption{Translation History Module}
-\label{fig:analysis}
+\label{fig:history}
 \end{figure}
 
 

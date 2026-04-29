@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1777319821.83595 "main.aux" "main.bbl" "main" 1777407813.7524 0
+["bibtex main"] 1777470163.0575 "main.aux" "main.bbl" "main" 1777470857.90357 0
   "./references.bib" 1777179663.39193 7539 ba49387e59cffaa90d6a824fd628e264 ""
   "./sbc.bst" 1776991676.54921 22370 b7580b5ffc692f96d81a2b185ee01582 ""
-  "main.aux" 1777407812.94951 5601 5a2770469cdf789e5be6b716a90e84dc "pdflatex"
+  "main.aux" 1777470857.14676 5667 9818c94752a6dc1a9e644bde8b80bd9d "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1777407810.45394 "main.tex" "main.pdf" "main" 1777407813.75274 0
+["pdflatex"] 1777470854.7714 "main.tex" "main.pdf" "main" 1777470857.9039 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -158,10 +158,10 @@
   "figures/fig_arch_highres.png" 1777320730.21845 63543 9e7cf10fb30e2b2354b1c198bc4749da ""
   "figures/fig_pipeline_highres.png" 1777320732.36015 108915 8a1056420c34d72f61f4086c06f0437a ""
   "figures/history.png" 1777312505.63462 139429 adb45565e10a6c4cad325ec657b29195 ""
-  "main.aux" 1777407812.94951 5601 5a2770469cdf789e5be6b716a90e84dc "pdflatex"
-  "main.bbl" 1777319822.07966 5779 41942fa4f08e735b0edcd634aa2f46de "bibtex main"
-  "main.out" 1777407812.95285 3628 f45c7a7c375d7ace9f8c086553520184 "pdflatex"
-  "main.tex" 1777407808.50514 30031 9d246ef5cbbdd4ac8a57c8208239baa5 ""
+  "main.aux" 1777470857.14676 5667 9818c94752a6dc1a9e644bde8b80bd9d "pdflatex"
+  "main.bbl" 1777470163.31433 5779 41942fa4f08e735b0edcd634aa2f46de "bibtex main"
+  "main.out" 1777470857.14828 3628 f45c7a7c375d7ace9f8c086553520184 "pdflatex"
+  "main.tex" 1777470853.43822 30123 729411300b0f2526c873e8162a2234a6 ""
   "sbc-template.sty" 1776804846.97197 5281 f60233dbabaac345ab9dfcfe5d9e298f ""
   (generated)
   "main.aux"
